@@ -1,9 +1,9 @@
 title:            tigi's blog
 description:      the Consideration about the Idea - 생각에 대한 고찰
 disqus_shortname: onlytigi
-facebook_comment_href: https://onlytigi.github.io
 reading_time:     true
 words_per_minute: 200
+facebook_sdk: true
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
 # When testing locally leave blank or use http://localhost:4000
 url:
@@ -35,7 +35,6 @@ google_analytics:
 google_verify:
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
 bing_verify:
-facebook_sdk: true
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Asia/Seoul

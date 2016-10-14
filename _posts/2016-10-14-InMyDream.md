@@ -1,6 +1,6 @@
 ---
 layout: post
-categories: "ART"
+categories: "art"
 title: "InMyDream"
 description: "a scene in my dream"
 tags: [art, dream, illustration, photoshop]
