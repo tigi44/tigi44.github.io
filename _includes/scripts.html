@@ -16,24 +16,4 @@
 </script>
 {% endif %}
 
-{% if site.facebook_sdk %}
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1731261067138278',
-      xfbml      : true,
-      version    : 'v2.8'
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/ko_KR/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-{% endif %}
-
 {% if page.comments != false %}{% include disqus_comments.html %}{% endif %}
