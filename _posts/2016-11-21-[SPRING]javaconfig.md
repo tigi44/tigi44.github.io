@@ -62,7 +62,7 @@ Spring Framework 관련 maven 설정 필요
 </dependency>
 ```
 **[주의]**
-
+<br>
 web.xml 파일을 삭제하고 pom.xml에서 failOnMissingWebXml관련 오류가 발생할 경우 아래와 같은 설정을 pom.xml에 작성
 
 ```xml
@@ -252,7 +252,7 @@ public class WebConfig implements WebApplicationInitializer {
 <br>
 
 **[주의]**
-
+<br>
 javax.servlet.ServletContext 에서 addListener 가 보이지 않는다면 pom.xml의 javax.servlet의 버전을 수정하여 해결할 수 있다.
 
 ```xml
