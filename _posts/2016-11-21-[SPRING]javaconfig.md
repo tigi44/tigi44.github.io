@@ -3,32 +3,29 @@ layout: post
 categories: "spring"
 title: "[SPRING] JAVA CONFIG"
 description: "Spring framework - java config"
-modified: 2016-11-21
+modified: 2016-11-22
 tags: [spring framwork, java config, spring4, java1.8, develop]
 ---
 
-# JAVA CONFIG
+## JAVA CONFIG
 Spring MVC 프로젝트에서 xml 파일 대신 java를 이용하여 설정할 수 있도록 환경 셋팅
 
 * Spring MVC 프로젝트 생성 필요
 
-<br>
+---
 
-# GIT SOURCE
-[springStudy - java config commit](https://github.com/onlytigi/springStudy/commit/ed3baabe878b17e824895cf86a4acf160a3dd702)
+## GIT SOURCE
+* [springStudy - java config commit](https://github.com/onlytigi/springStudy/commit/ed3baabe878b17e824895cf86a4acf160a3dd702)
 
-<br>
+---
 
-# VERSION
-___
+## VERSION
 - JAVA Version : 1.8
 - Spring Framework Version : 4.x.x
 
-___
+---
 
-<br>
-
-# MAVEN 설정
+## MAVEN 설정
 Spring Framework 관련 maven 설정 필요
 
 ```xml
@@ -61,8 +58,7 @@ Spring Framework 관련 maven 설정 필요
 	<version>${org.springframework-version}</version>
 </dependency>
 ```
-**[주의]**
-<br>
+>[참고]
 web.xml 파일을 삭제하고 pom.xml에서 failOnMissingWebXml관련 오류가 발생할 경우 아래와 같은 설정을 pom.xml에 작성
 
 ```xml
@@ -71,21 +67,23 @@ web.xml 파일을 삭제하고 pom.xml에서 failOnMissingWebXml관련 오류가
 </properties>
 ```
 
-<br>
+---
 
-# 기존 XML 파일 삭제
+## 기존 XML 파일 삭제
 - appServlet > root-context.xml 삭제
 - spring > appServlet > servlet-context.xml 삭제
 - web.xml 삭제
 
 ![project_before](/images/post/spring/javaconfig_project_before.png)
 
-<br>
+---
 
-# JAVA CONFIG 파일 생성
+## JAVA CONFIG 파일 생성
 ![project_after](/images/post/spring/javaconfig_project_after.png)
 
 - RootAppConfig.java : root-context.xml 대체 생성
+
+처음 root-context.xml 설정엔 별 내용이 선언되어 있지 않기때문에 RootAppConfig.java파일에서도 별다른 설정은 없는 상태
 
 ```java
 // RootAppConfig.java
@@ -178,7 +176,6 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
 - WebConfig.java : web.xml 대체 생성
 
-
 ```xml
 <!-- web.xml -->
 
@@ -251,8 +248,7 @@ public class WebConfig implements WebApplicationInitializer {
 ```
 <br>
 
-**[주의]**
-<br>
+>[참고]
 javax.servlet.ServletContext 에서 addListener 가 보이지 않는다면 pom.xml의 javax.servlet의 버전을 수정하여 해결할 수 있다.
 
 ```xml
