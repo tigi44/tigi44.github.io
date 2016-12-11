@@ -69,6 +69,8 @@ public class WebConfig implements WebApplicationInitializer {
 }
 ```
 
+---
+
 ## SecurityConfig.java 파일 생성
 
 ```java
