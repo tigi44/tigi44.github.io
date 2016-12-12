@@ -152,3 +152,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
+
+>[참고]
+CSRF (Cross Site Request Forgery)
+- 웹사이트의 취약점을 이용한 공격으로 사용자의 의지와는 무관하게 공격자가 의도한 행위(수정, 삭제, 등록 등)를 특정 웹사이트에 요청하게 하는 공격을 말한다.
+Security 설정중 이와 관련된 옵션을 설정할 수 있다.
+[참고 wiki](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
