@@ -3,7 +3,7 @@ layout: post
 categories: "spring"
 title: "[SPRING] JAVA SECURITY CONFIG"
 description: "Spring framework - java security config"
-modified: 2016-12-11
+modified: 2017-01-08
 tags: [spring framwork, java config, security config, spring4, java1.8, develop]
 ---
 
@@ -158,3 +158,31 @@ CSRF (Cross Site Request Forgery)
 - 웹사이트의 취약점을 이용한 공격으로 사용자의 의지와는 무관하게 공격자가 의도한 행위(수정, 삭제, 등록 등)를 특정 웹사이트에 요청하게 하는 공격을 말한다.
 Security 설정중 이와 관련된 옵션을 설정할 수 있다.
 [참고 wiki](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
+
+
+---
+
+## loginPage.jsp
+SecurityConfig.java 에서 설정한 `loginProcessingUrl` 값을 form action으로 설정하고, `usernameParameter`, `passwordParameter` 값을 각각 form의 input name으로 추가
+
+```html
+<html>
+<head>
+	<title>Login</title>
+</head>
+<body>
+<h1>
+	Login!
+</h1>
+<br>
+<form action="/login" method="POST">
+ <table>
+    <tbody><tr><td>User:</td><td><input type="text" name="username"></td></tr>
+    <tr><td>Password:</td><td><input type="password" name="password"></td></tr>
+    <tr><td colspan="2"><input name="submit" type="submit" value="Login"></td></tr>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  </tbody></table>
+</form>
+</body>
+</html>
+```
