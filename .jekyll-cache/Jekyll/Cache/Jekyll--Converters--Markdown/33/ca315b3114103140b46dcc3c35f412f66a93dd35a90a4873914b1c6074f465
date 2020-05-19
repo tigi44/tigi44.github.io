@@ -1,0 +1,183 @@
+I"�7<h2 id="security-config">SECURITY CONFIG</h2>
+<p>JAVA를 이용한 Spring Security Config 설정</p>
+
+<hr />
+
+<h2 id="git-source">GIT SOURCE</h2>
+<ul>
+  <li><a href="https://github.com/onlytigi/springStudy/commit/ad38c24b83983fa6d692af27dd11bb6e548f5e8a">springStudy - Security Config commit</a></li>
+</ul>
+
+<hr />
+
+<h2 id="version">VERSION</h2>
+<ul>
+  <li>JAVA Version : 1.8</li>
+  <li>Spring Framework Version : 4.x.x</li>
+</ul>
+
+<hr />
+
+<h2 id="maven-설정-pomxml">MAVEN 설정 (pom.xml)</h2>
+<p>Spring Framework security 관련 maven 설정 필요</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Security --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.security<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-security-web<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>4.0.0.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.security<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-security-config<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>4.0.0.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="webconfigjava-webxml-대체">WebConfig.java (web.xml 대체)</h2>
+<p>서블릿 필터 등록시 필터 내부에서 Spring Bean을 주입 받기 위해 DelegatingFilterProxy 등록 필요</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// web.xml 대체용 WebConfig.java내 DelegatingFilterProxy 등록 코드</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebConfig</span> <span class="kd">implements</span> <span class="nc">WebApplicationInitializer</span> <span class="o">{</span>
+
+	<span class="o">...</span>
+
+<span class="c1">//	&lt;!-- 기존 web.xml에서 DelegatingFilterProxy 등록  --&gt;</span>
+<span class="c1">//	&lt;filter&gt;</span>
+<span class="c1">//		&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;</span>
+<span class="c1">//		&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span>
+<span class="c1">//	&lt;/filter&gt;</span>
+<span class="c1">//	&lt;filter-mapping&gt;</span>
+<span class="c1">//		&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;</span>
+<span class="c1">//		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span>
+<span class="c1">//	&lt;/filter-mapping&gt;</span>
+	<span class="nc">FilterRegistration</span><span class="o">.</span><span class="na">Dynamic</span> <span class="n">delegatingFilterReg</span> <span class="o">=</span> <span class="n">servletContext</span><span class="o">.</span><span class="na">addFilter</span><span class="o">(</span><span class="s">"springSecurityFilterChain"</span><span class="o">,</span> <span class="nc">DelegatingFilterProxy</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+	<span class="n">delegatingFilterReg</span><span class="o">.</span><span class="na">addMappingForUrlPatterns</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="s">"/*"</span><span class="o">);</span>
+
+	<span class="o">...</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="securityconfigjava-파일-생성">SecurityConfig.java 파일 생성</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SecurityConfig.java</span>
+
+<span class="nd">@Configuration</span>
+<span class="nd">@EnableWebSecurity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="nc">WebSecurityConfigurerAdapter</span> <span class="o">{</span>
+
+  <span class="cm">/*
+  * user authentication manager
+  *  &lt;security:authentication-manager&gt;
+  *   &lt;security:authentication-provider&gt;
+  *       &lt;security:user-service&gt;
+  *           &lt;security:user name="user" password="password" authorities="ROLE_USER" /&gt;
+  *       &lt;/security:user-service&gt;
+  *   &lt;/security:authentication-provider&gt;
+  *	&lt;/security:authentication-manager&gt;
+  */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+  	<span class="n">auth</span><span class="o">.</span><span class="na">inMemoryAuthentication</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">withUser</span><span class="o">(</span><span class="s">"user"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"password"</span><span class="o">).</span><span class="na">roles</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">and</span><span class="o">().</span><span class="na">withUser</span><span class="o">(</span><span class="s">"admin"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"admin"</span><span class="o">).</span><span class="na">roles</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="cm">/**
+  * &lt;security:http pattern="/resources/**" security="none" /&gt;
+  */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">WebSecurity</span> <span class="n">web</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="n">web</span><span class="o">.</span><span class="na">ignoring</span><span class="o">()</span>
+       <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/resources/**"</span><span class="o">);</span>
+  <span class="o">}</span>
+
+ <span class="cm">/**
+  * &lt;security:http auto-config="true"&gt;
+  *
+  *   &lt;security:intercept-url pattern="/favicon.ico" access="permitAll" /&gt;
+  *   &lt;security:intercept-url pattern="/" access="permitAll" /&gt;
+  *   &lt;security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" /&gt;
+  *   &lt;security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY /&gt;
+  *
+  *   &lt;security:csrf disabled="false"/&gt;
+  *
+  *   &lt;security:form-login
+  *    login-page="/security/loginPage"
+  *    login-processing-url="/login"
+  *    username-parameter="username"
+  *    password-parameter="password"
+  *    default-target-url="/"/&gt;
+  *
+  *   &lt;security:logout logout-url="/logout" logout-success-url="/"/&gt;
+  *   &lt;security:access-denied-handler error-page="/security/error"/&gt;
+  * &lt;/security:http&gt;
+  */</span>    
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+      <span class="n">http</span>
+        <span class="c1">//.csrf().disable() // csrf 관련 설정 (보안관련 설정)</span>
+          <span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/favicon.ico"</span><span class="o">,</span> <span class="s">"/"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span> <span class="c1">// 모든 권한 허용</span>
+          <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/admin/**"</span><span class="o">).</span><span class="na">hasAnyRole</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">)</span> <span class="c1">// "ADMIN"권한 허용</span>
+          <span class="o">.</span><span class="na">anyRequest</span><span class="o">().</span><span class="na">authenticated</span><span class="o">()</span> <span class="c1">// 여타 다른주소들은 "USER"권한 체크</span>
+          <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">formLogin</span><span class="o">()</span>  <span class="c1">// 로그인 form</span>
+        <span class="c1">//.usernameParameter("username") // form내 권한명 파라미터 name (default : username)</span>
+        <span class="c1">//.passwordParameter("password") // form내 비밀번호 파라미터 name (default : password)</span>
+          <span class="o">.</span><span class="na">loginPage</span><span class="o">(</span><span class="s">"/security/loginPage"</span><span class="o">)</span> <span class="c1">// 권한이 필요한 페이지 접근시 로그인 페이지로 리다이렉</span>
+          <span class="o">.</span><span class="na">loginProcessingUrl</span><span class="o">(</span><span class="s">"/login"</span><span class="o">)</span> <span class="c1">// 로그인 url</span>
+          <span class="o">.</span><span class="na">permitAll</span><span class="o">()</span>  <span class="c1">// 로그인 페이지는 모든 권한 허용</span>
+          <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">logout</span><span class="o">()</span> <span class="c1">// 로그아웃 설정</span>
+          <span class="o">.</span><span class="na">logoutUrl</span><span class="o">(</span><span class="s">"/logout"</span><span class="o">)</span> <span class="c1">// 로그아웃 url</span>
+          <span class="o">.</span><span class="na">logoutSuccessUrl</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span> <span class="c1">// 로그아웃 성공후 이동 url</span>
+          <span class="o">.</span><span class="na">permitAll</span><span class="o">()</span> <span class="c1">// 로그아웃 모든 권한 허용</span>
+          <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">exceptionHandling</span><span class="o">().</span><span class="na">accessDeniedPage</span><span class="o">(</span><span class="s">"/security/error"</span><span class="o">);</span> <span class="c1">// 권한 획득 관련 에러시 이동 url</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>[참고]
+CSRF (Cross Site Request Forgery)</p>
+  <ul>
+    <li>웹사이트의 취약점을 이용한 공격으로 사용자의 의지와는 무관하게 공격자가 의도한 행위(수정, 삭제, 등록 등)를 특정 웹사이트에 요청하게 하는 공격을 말한다.
+Security 설정중 이와 관련된 옵션을 설정할 수 있다.
+<a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">참고 wiki</a></li>
+  </ul>
+</blockquote>
+
+<hr />
+
+<h2 id="loginpagejsp">loginPage.jsp</h2>
+<p>SecurityConfig.java 에서 설정한 <code class="highlighter-rouge">loginProcessingUrl</code> 값을 form action으로 설정하고, <code class="highlighter-rouge">usernameParameter</code>, <code class="highlighter-rouge">passwordParameter</code> 값을 각각 form의 input name으로 추가</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Login<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>
+	Login!
+<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/login"</span> <span class="na">method=</span><span class="s">"POST"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;table&gt;</span>
+    <span class="nt">&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;</span>User:<span class="nt">&lt;/td&gt;&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"username"</span><span class="nt">&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;&lt;td&gt;</span>Password:<span class="nt">&lt;/td&gt;&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;&lt;td</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;&lt;input</span> <span class="na">name=</span><span class="s">"submit"</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Login"</span><span class="nt">&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"${_csrf.parameterName}"</span> <span class="na">value=</span><span class="s">"${_csrf.token}"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/tbody&gt;&lt;/table&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET
