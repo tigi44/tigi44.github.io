@@ -8,7 +8,3 @@ image:
 comments: false
 modified: 2016-10-13
 ---
-
-DEVELOP and ART, IDEA
-
-tigi's [Github](http://github.com/onlytigi)
