@@ -8,13 +8,7 @@ tags: [iOS, Objective-c, UIActivityViewController]
 ---
 
 ## UIActivityViewController
-```obj-c
-
-NSURL *sFilePathURL = [NSURL fileURLWithPath:aFilePath];
-UIActivityViewController *sActivityController = [[UIActivityViewController alloc] initWithActivityItems:@[sFilePathURL] applicationActivities:nil];
-[self presentViewController:sActivityController animated:YES completion:nil];
-
-```
+<script src="https://gist.github.com/tigi44/2463f71a0d4d9a45cce0eab4a137fd8d.js"></script>
 ## ScreenShot
 <figure>
 	<a href="{{ site.url }}/images/post/ios/UIActivityViewController.png"><img src="{{ site.url }}/images/post/ios/UIActivityViewController.png" alt=""></a>
