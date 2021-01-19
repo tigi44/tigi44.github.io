@@ -7,20 +7,26 @@ modified: 2021-01-18
 tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern, Architecture, Design Pattern]
 ---
 
+# Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager)
+- CleanArchitecture
+- MVVM (View->ViewModel->Model)
+- [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/)
+- [Combine](https://developer.apple.com/documentation/combine)
+- [SwiftPackageManager](https://swift.org/package-manager/)
 
 여러 iOS 프로젝트에 사용하는 Architecture들 중, Clean Architecture와 MVVM 패턴을 사용하여 프로젝트 구조를 설계해 봅니다.
 
-Clean Architecture 구조를 이용하여 앱을 역할별 레이어들로 분리합니다.
+`Clean Architecture` 구조를 이용하여 앱을 역할별 레이어들로 분리합니다.
 
-이렇게 분리된 레이어들은 타겟으로 만들어 [SwiftPackageManager](https://swift.org/package-manager/){: target="_blank"}에 적용하면 레이어별 의존성 관리를 쉽게 할 수 있습니다.
+이렇게 분리된 레이어들은 타겟으로 만들어 `Swift Package Manager`에 적용하면 레이어별 의존성 관리를 쉽게 할 수 있습니다.
 
-전체적인 앱 동작은 [Combine](https://developer.apple.com/documentation/combine){: target="_blank"}을 기반으로 하여 비동기적인 이벤트 기반의 동작을 할 수 있도록 구현합니다.
+전체적인 앱 동작은 `Switf의 Combine`을 기반으로 하여 비동기적인 이벤트 기반의 동작을 할 수 있도록 구현합니다.
 
-PresentationLayer부분은 MVVM 패턴으로 적용하여 UI에 관해 쉽게 유지보수 할 수 있도록 합니다.
+UI부분은 `SwiftUI`와 `MVVM 패턴`으로 적용하여 쉽게 유지보수 할 수 있도록 합니다.
 
-iOS 프로젝트에 Clean Architecture를 적용하기전에 먼저 의존성 주입에 관해 알아야 전체적인 구조 이해에 도움이 됩니다.
+iOS 프로젝트에 Clean Architecture를 적용하기전에 먼저 `의존성 주입`에 관해 알아야 전체적인 구조 이해에 도움이 됩니다.
 
-# 의존성 주입 (DI: Dependency Injection)
+## 의존성 주입 (DI: Dependency Injection)
 ### 의존성 (Dependency)
 ```swift
 class A {
@@ -104,21 +110,29 @@ b.printNumber()
 
 
 # 0. Clean Architecture With MVVM 구조
+
+## 0-1. Clean Architecture 와 MVVM 구조 사용
+- 전체적인 앱 구조는 Clean Architecture 기반으로 레이어링
+  - `Presentation Layer`: UI관련 레이어(View, ViewModel)
+  - `Domain Layer`: 비지니스 로직 담당(Use Case)
+  - `Data Layer`: 원격/로컬 데이터소스에서 데이터를 가져옴
+- 레이어중 UI부분을 담당하는 Presentation Layer 부분은 MVVM 디자인 패턴으로 적용
+  - `MVVM 패턴`: VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
+
 ![cleanArchitecture](/images/post/cleanArchitecture/cleanarchitecture.png)
 ![withMVVM](/images/post/cleanArchitecture/withMVVM.png)
 
-- Presentation Layer : UI관련 레이어(View, ViewModel)
-  - MVVM 패턴으로 설계: VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
-- Domain Layer : 비지니스 로직 담당(Use Case)
-- Data Layer : 원격/로컬 데이터소스에서 데이터를 가져옴
-
-### 데이터 흐름 및 의존성 방향
+## 0-2. Clean Architecture 구조내의 데이터 흐름 및 의존성 방향
 ![dataFlow](/images/post/cleanArchitecture/dataFlow.png)
+- DomainLayer와 DataLayer 사이에서는 Dependency Inversion 구현
 
-# 1. SPM(Swift Package Manager) 의존성 구현
+# 1. SPM(Swift Package Manager)를 이용한 앱 구조 및 Layer별 의존성 구현
+## 1-1. 프로젝트 구조
 ![spm](/images/post/cleanArchitecture/spm.png)
 
-### 1-1. Package.swift 의존성 구조
+## 1-2. Package.swift
+- Clean Architecture의 각 Layer별 의존성 구현
+
 ```swift
 import PackageDescription
 
@@ -175,6 +189,7 @@ public struct MyGroupEntity: Identifiable {
     }
 }
 ```
+- 외부 변화에 변경될 가능성이 가장 적은 데이터구조
 
 ## 2-2. UseCase
 ### FetchGroupListUseCase.swift
@@ -205,11 +220,12 @@ public protocol GroupRepositoryInterface {
     func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
 }
 ```  
-- `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 데이터처리로직이 필요하면 이곳에 추가
-- `GroupRepositoryInterface`를 DomainLayer안에 선언함으로써, DataLayer에 대한 의존성을 갖지 않음  
+- `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
+- `GroupRepositoryInterface`를 DomainLayer안에 선언함으로써, DataLayer에 대한 의존성을 갖지 않음 (Dependency Inversion)
 
 # 3. Presentation Layer 구현
 - MVVM 디자인 패턴으로 구현
+- VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
 
 ## 3-1. ViewModel
 ### GroupViewModel.swift
@@ -249,7 +265,7 @@ public final class MyGroupListViewModel: ObservableObject, MyGroupListViewModelI
 }
 ```
 - `ObservableObject`와 `@Published` 등의 Combine을 이용한 바인딩 처리
-- `@Published public var myGroups: [MyGroupEntity]`:  ViewModel이 Model에 대해 의존성을 갖음(ViewModel -> Model)
+- ViewModel이 Model(Entity)에 대해 의존성을 갖음(ViewModel -> Model)
 
 ## 3-2. View
 ### GroupView.swift
@@ -310,11 +326,13 @@ public struct GroupView: View {
 }
 ```
 - `@ObservedObject`로 ViewModel안에서 업데이트되는 Model값 사용
-- `@ObservedObject public var viewModel: MyGroupListViewModel`: View가 ViewModel에 대해 의존성을 갖음(View -> ViewModel)
+- View가 ViewModel에 대해 의존성을 갖음(View -> ViewModel)
 
 # 4. Data Layer 구현
 ## 4-1. Repository
-### GroupRepository
+- `DataSource`를 통해 데이터 값을 가져오는 역할
+
+### GroupRepository.swift
 ```swift
 import Foundation
 import Combine
@@ -340,10 +358,11 @@ public final class GroupRepository: GroupRepositoryInterface {
     }
 }
 ```
-- 외부에서 주입되는 `DataSource`를 통해 데이터 값을 가져오는 역할
 
 ## 4-2. DataSource
-### DataModel DOT(Data Object Transfer)
+- DB 및 외부 API등을 통해 데이터를 가져오는 부분
+
+### DataModel & DOT(Data Object Transfer) (GroupDataSource.swift)
 ```swift
 public struct GroupModel: Codable {
     let image: String
@@ -361,7 +380,7 @@ public struct GroupModel: Codable {
 - `DataSource`에서 가져오는 데이터 모델
 - 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환(Data Object Transfer)
 
-### GroupLocalDataSource
+### GroupLocalDataSource (GroupDataSource.swift)
 ```swift
 import Foundation
 import Combine
@@ -401,10 +420,10 @@ public final class GroupLocalDataSource: GroupDataSourceInterface {
 }
 
 ```
-- `DataSource`의 한 종류로 데스트를 위해 앱 내부의 값을 사용 하도록 구현
+- `DataSource`의 한 종류로 테스트를 위해 앱 내부의 값을 사용 하도록 구현
 - Combine의 Just(Publisher)로 구현
 
-### GroupRemoteDataSource
+### GroupRemoteDataSource (GroupDataSource.swift)
 ```swift
 public protocol GroupRemoteDataSourceInterface {
     init(urlString: String)
@@ -438,9 +457,11 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
 - URLSession을 Combine구조로  이용할 수 있는 dataTaskPublisher 사용
 
 # 5. App Layer (의존성 주입 컨테이너)
-![dependencyDiagram](/images/post/cleanArchitecture/dependencyDiagram.png)
 - 앱의 진입점
 - 의존성 주입 컨테이너 및 환경 설정
+- `Clean Architecture` 기반 구조에 의존성을 주입하기 위해 컨테이너 형태로 구현
+
+![dependencyDiagram](/images/post/cleanArchitecture/dependencyDiagram.png)
 
 ## 5-1. DI(Dependency Injection)
 ### MyGroupDI.swift
@@ -530,6 +551,23 @@ import Foundation
 
 public protocol AppDIInterface {
     func myGroupListDependencies() -> MyGroupListViewModel
+}
+```
+
+# 6. App Main
+### CleanArchitectureWithMVVMApp.swift
+- 뷰 초기화시에 의존성 주입 컨터이너인 AppDI를 사용하여, 해당 뷰에 맞는 의존성 주입
+```swift
+import SwiftUI
+import PresentationLayer
+
+@main
+struct CleanArchitectureWithMVVMApp: App {
+    var body: some Scene {
+        WindowGroup {
+            GroupView(viewModel: AppDI.shared.myGroupListDependencies())
+        }
+    }
 }
 ```
 
