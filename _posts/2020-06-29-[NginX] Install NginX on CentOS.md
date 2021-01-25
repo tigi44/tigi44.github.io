@@ -1,5 +1,4 @@
 ---
-layout: post
 categories: "NginX"
 title: "[NginX] Install NginX on CentOS"
 description: "Install NginX"

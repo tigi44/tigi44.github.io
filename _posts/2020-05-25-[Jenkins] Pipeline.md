@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "Jenkins"
 title: "[Jenkins] Pipeline"
 description: "Jenkins Pipeline"

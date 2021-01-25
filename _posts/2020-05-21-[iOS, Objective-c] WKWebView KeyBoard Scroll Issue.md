@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "iOS"
 title: "[iOS, Objective-c] WKWebView KeyBoard Scroll Issue"
 description: " WKWebView KeyBoard Scroll Issue"

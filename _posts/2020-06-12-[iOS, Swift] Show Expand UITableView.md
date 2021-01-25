@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "Swift"
 title: "[iOS, Swift] Show Expand UITableView"
 description: "Show Expand UITableView"

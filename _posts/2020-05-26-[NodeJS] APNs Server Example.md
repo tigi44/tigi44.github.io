@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "NodeJS"
 title: "[NodeJS] APNs Server Example"
 description: "APNs Server Example"

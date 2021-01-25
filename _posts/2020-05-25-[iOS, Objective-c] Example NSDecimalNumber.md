@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "iOS"
 title: "[iOS, Objective-c] Example NSDecimalNumber"
 description: "NSDecimalNumber"

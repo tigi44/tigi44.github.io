@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "art"
 title: "InMyDream"
 description: "a scene in my dream"

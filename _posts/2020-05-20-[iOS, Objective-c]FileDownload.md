@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "iOS"
 title: "[iOS, Objective-c] File Download (HTTP Response attachment)"
 description: "File Download (HTTP Response attachment)"

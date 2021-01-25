@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "spring"
 title: "[SPRING] JAVA SECURITY CONFIG"
 description: "Spring framework - java security config"

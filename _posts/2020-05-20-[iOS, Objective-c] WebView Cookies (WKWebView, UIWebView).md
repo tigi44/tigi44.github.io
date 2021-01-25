@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "iOS"
 title: "[iOS, Objective-c] WebView Cookies (WKWebView, UIWebView)"
 description: "WebView Cookies (WKWebView, UIWebView)"

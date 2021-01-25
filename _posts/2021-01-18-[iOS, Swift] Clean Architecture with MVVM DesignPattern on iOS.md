@@ -1,5 +1,4 @@
 ---
-layout: post
 categories: "iOS"
 title: "[iOS, Swift] Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SPM)"
 description: "Clean Architecture, MVVM DesignPattern"

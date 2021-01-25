@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "develop"
 title: "Develop Reference Sites"
 description: "알아두면 유용한 사이트"

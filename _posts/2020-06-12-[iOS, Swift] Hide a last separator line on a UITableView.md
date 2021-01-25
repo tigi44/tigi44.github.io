@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "Swift"
 title: "[iOS, Swift] Hide a last separator line on UITableView"
 description: "Hide a last separator line on a UITableView"

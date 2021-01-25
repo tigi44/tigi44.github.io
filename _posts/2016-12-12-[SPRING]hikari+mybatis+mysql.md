@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "spring"
 title: "[SPRING] JDBC - HIKARI CP + MYBATIS + MYSQL"
 description: "Spring framework - spring jdbc db접근을 통한 Security 권한 획득하기"

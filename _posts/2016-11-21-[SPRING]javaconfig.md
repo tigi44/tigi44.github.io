@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "spring"
 title: "[SPRING] JAVA CONFIG"
 description: "Spring framework - java config"

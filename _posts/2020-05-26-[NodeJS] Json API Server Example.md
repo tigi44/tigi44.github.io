@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "NodeJS"
 title: "[NodeJS] Json API Server Example"
 description: "Json API Server Example"
