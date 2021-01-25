@@ -5,6 +5,8 @@ title: "[SPRING] JAVA CONFIG"
 description: "Spring framework - java config"
 modified: 2016-11-22
 tags: [spring framwork, java config, spring4, java1.8, develop]
+toc: true
+toc_sticky: true
 ---
 
 ## JAVA CONFIG

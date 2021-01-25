@@ -5,6 +5,8 @@ title: "[SPRING] JAVA SECURITY CONFIG"
 description: "Spring framework - java security config"
 modified: 2017-01-08
 tags: [spring framwork, java config, security config, spring4, java1.8, develop]
+toc: true
+toc_sticky: true
 ---
 
 ## SECURITY CONFIG

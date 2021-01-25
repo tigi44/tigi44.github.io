@@ -5,6 +5,8 @@ title: "[iOS, Objective-c] UIActivityViewController : Share File"
 description: "UIActivityViewController"
 modified: 2020-05-20
 tags: [iOS, Objective-c, UIActivityViewController]
+toc: true
+toc_sticky: true
 ---
 
 ## UIActivityViewController

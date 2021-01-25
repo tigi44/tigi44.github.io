@@ -5,6 +5,8 @@ title: "[iOS, Swift] Show Expand UITableView"
 description: "Show Expand UITableView"
 modified: 2020-05-26
 tags: [Swift, iOS, UITableView]
+toc: true
+toc_sticky: true
 ---
 
 ## ExpandedTableView.swift

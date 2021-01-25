@@ -5,6 +5,8 @@ title: "[Jenkins] Pipeline"
 description: "Jenkins Pipeline"
 modified: 2020-05-25
 tags: [Jenkins, Pipeline, back-end]
+toc: true
+toc_sticky: true
 ---
 
 ### 1. Install Pipeline plug-in

@@ -5,6 +5,8 @@ title: "[iOS, Objective-c] File Download (HTTP Response attachment)"
 description: "File Download (HTTP Response attachment)"
 modified: 2020-05-20
 tags: [iOS, Objective-c, File Download, HTTP Response attachment]
+toc: true
+toc_sticky: true
 ---
 
 ## File Download

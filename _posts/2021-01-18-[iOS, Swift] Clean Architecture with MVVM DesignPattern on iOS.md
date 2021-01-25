@@ -4,6 +4,9 @@ title: "[iOS, Swift] Clean Architecture With MVVM on iOS(using SwiftUI, Combine,
 description: "Clean Architecture, MVVM DesignPattern"
 modified: 2021-01-18
 tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern, Architecture, Design Pattern]
+toc: true
+toc_sticky: true
+toc_label: "페이지 주요 목차"
 ---
 
 # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager)

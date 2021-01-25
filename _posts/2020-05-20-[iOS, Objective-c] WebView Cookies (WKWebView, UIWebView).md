@@ -5,6 +5,8 @@ title: "[iOS, Objective-c] WebView Cookies (WKWebView, UIWebView)"
 description: "WebView Cookies (WKWebView, UIWebView)"
 modified: 2020-05-20
 tags: [iOS, Objective-c, WebView, cookies, WKWebView, UIWebView]
+toc: true
+toc_sticky: true
 ---
 
 ## WKWebView
