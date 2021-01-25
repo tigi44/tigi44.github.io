@@ -74,12 +74,12 @@ web.xml 파일을 삭제하고 pom.xml에서 failOnMissingWebXml관련 오류가
 - spring > appServlet > servlet-context.xml 삭제
 - web.xml 삭제
 
-![project_before](/images/post/spring/javaconfig_project_before.png)
+![project_before](/assets/images/post/spring/javaconfig_project_before.png)
 
 ---
 
 ## JAVA CONFIG 파일 생성
-![project_after](/images/post/spring/javaconfig_project_after.png)
+![project_after](/assets/images/post/spring/javaconfig_project_after.png)
 
 - RootAppConfig.java : root-context.xml 대체 생성
 
