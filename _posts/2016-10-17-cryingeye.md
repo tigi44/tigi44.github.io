@@ -1,5 +1,5 @@
 ---
-layout: post
+
 categories: "art"
 title: "cryingeye"
 description: "cryingeye in the sky"

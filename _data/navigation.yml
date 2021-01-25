@@ -1,16 +1,20 @@
-# Menu navigation links
-
-# - title: github<br>- Gizmo3DTool
-#   url: https://github.com/onlytigi/Gizmo3DGraphicTool
-#
-# - title: github<br>- UnityMobileGame
-#   url: https://github.com/onlytigi/Game4jo
-#
-# - title: github<br>- SwiftStudy
-#   url: https://github.com/onlytigi/swiftStudy
-#
-# - title: github<br>- SpringStudy
-#   url: https://github.com/onlytigi/springStudy
-#
-# - title: github<br>- JavascriptStudy
-#   url: https://github.com/onlytigi/javaScriptStudy
+# main links
+main:
+  # - title: "Quick-Start Guide"
+  #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+  # - title: "About"
+  #   url: https://mmistakes.github.io/minimal-mistakes/about/
+  # - title: "Sample Posts"
+  #   url: /year-archive/
+  # - title: "Sample Collections"
+  #   url: /collection-archive/
+  # - title: "Sitemap"
+  #   url: /sitemap/
+  - title: "Categories"
+    url: /categories/
+  - title: "Tags"
+    url: /tags/
+  # - title: "About"
+  #   url: /about/
+  - title: "Years"
+    url: /year-archive/

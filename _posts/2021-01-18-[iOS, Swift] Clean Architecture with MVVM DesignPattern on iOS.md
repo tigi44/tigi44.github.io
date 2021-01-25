@@ -1,10 +1,12 @@
 ---
-layout: post
 categories: "iOS"
 title: "[iOS, Swift] Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SPM)"
 description: "Clean Architecture, MVVM DesignPattern"
 modified: 2021-01-18
 tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern, Architecture, Design Pattern]
+toc: true
+toc_sticky: true
+toc_label: "페이지 주요 목차"
 ---
 
 # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager)
@@ -119,16 +121,16 @@ b.printNumber()
 - 레이어중 UI부분을 담당하는 Presentation Layer 부분은 MVVM 디자인 패턴으로 적용
   - `MVVM 패턴`: VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
 
-![cleanArchitecture](/images/post/cleanArchitecture/cleanarchitecture.png)
-![withMVVM](/images/post/cleanArchitecture/withMVVM.png)
+![cleanArchitecture](/assets/images/post/cleanArchitecture/cleanarchitecture.png)
+![withMVVM](/assets/images/post/cleanArchitecture/withMVVM.png)
 
 ## 0-2. Clean Architecture 구조내의 데이터 흐름 및 의존성 방향
-![dataFlow](/images/post/cleanArchitecture/dataFlow.png)
+![dataFlow](/assets/images/post/cleanArchitecture/dataFlow.png)
 - DomainLayer와 DataLayer 사이에서는 Dependency Inversion 구현
 
 # 1. SPM(Swift Package Manager)를 이용한 앱 구조 및 Layer별 의존성 구현
 ## 1-1. 프로젝트 구조
-![spm](/images/post/cleanArchitecture/spm.png)
+![spm](/assets/images/post/cleanArchitecture/spm.png)
 
 ## 1-2. Package.swift
 - Clean Architecture의 각 Layer별 의존성 구현
@@ -461,7 +463,7 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
 - 의존성 주입 컨테이너 및 환경 설정
 - `Clean Architecture` 기반 구조에 의존성을 주입하기 위해 컨테이너 형태로 구현
 
-![dependencyDiagram](/images/post/cleanArchitecture/dependencyDiagram.png)
+![dependencyDiagram](/assets/images/post/cleanArchitecture/dependencyDiagram.png)
 
 ## 5-1. DI(Dependency Injection)
 ### MyGroupDI.swift
@@ -557,6 +559,7 @@ public protocol AppDIInterface {
 # 6. App Main
 ### CleanArchitectureWithMVVMApp.swift
 - 뷰 초기화시에 의존성 주입 컨터이너인 AppDI를 사용하여, 해당 뷰에 맞는 의존성 주입
+
 ```swift
 import SwiftUI
 import PresentationLayer

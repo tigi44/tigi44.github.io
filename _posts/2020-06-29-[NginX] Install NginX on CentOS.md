@@ -1,10 +1,11 @@
 ---
-layout: post
 categories: "NginX"
 title: "[NginX] Install NginX on CentOS"
 description: "Install NginX"
 modified: 2020-06-29
 tags: [NginX, CentOS, proxy, Web, Server, HTTP, HTTPS]
+toc: true
+toc_sticky: true
 ---
 
 # 1. Install NginX Using yum
