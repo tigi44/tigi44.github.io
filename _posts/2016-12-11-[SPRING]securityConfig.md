@@ -1,12 +1,16 @@
 ---
-
-categories: "spring"
 title: "[SPRING] JAVA SECURITY CONFIG"
+excerpt: "Spring framework - java security config"
 description: "Spring framework - java security config"
 modified: 2017-01-08
-tags: [spring framwork, java config, security config, spring4, java1.8, develop]
+categories: "Spring"
+tags: [spring framwork, java config, security config, spring4, java1.8, Server]
+
 toc: true
 toc_sticky: true
+
+header:
+  teaser: /assets/images/OG-Spring.png
 ---
 
 ## SECURITY CONFIG

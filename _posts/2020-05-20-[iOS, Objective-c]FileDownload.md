@@ -1,12 +1,15 @@
 ---
-
-categories: "iOS"
 title: "[iOS, Objective-c] File Download (HTTP Response attachment)"
+excerpt: "File Download (HTTP Response attachment)"
 description: "File Download (HTTP Response attachment)"
 modified: 2020-05-20
+categories: "iOS"
 tags: [iOS, Objective-c, File Download, HTTP Response attachment]
-toc: true
-toc_sticky: true
+
+classes: wide
+
+header:
+  teaser: /assets/images/ios-logo.png
 ---
 
 ## File Download

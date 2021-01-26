@@ -1,12 +1,15 @@
 ---
-
-categories: "Swift"
-title: "[iOS, Swift] Show Expand UITableView"
+title: "[iOS, Swift] Dynamic UITableView Height by Content Size"
+excerpt: "Show Expand UITableView"
 description: "Show Expand UITableView"
 modified: 2020-05-26
+categories: "iOS"
 tags: [Swift, iOS, UITableView]
-toc: true
-toc_sticky: true
+
+classes: wide
+
+header:
+  teaser: /assets/images/swift-logo.png
 ---
 
 ## ExpandedTableView.swift

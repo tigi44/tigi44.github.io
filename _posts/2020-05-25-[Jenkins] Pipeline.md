@@ -1,16 +1,20 @@
 ---
-
-categories: "Jenkins"
 title: "[Jenkins] Pipeline"
+excerpt: "Jenkins Pipeline"
 description: "Jenkins Pipeline"
 modified: 2020-05-25
-tags: [Jenkins, Pipeline, back-end]
+categories: "Jenkins"
+tags: [Jenkins, Pipeline, Back-end, Server]
+
 toc: true
 toc_sticky: true
+
+header:
+  teaser: /assets/images/jenkins-logo.png
 ---
 
 ### 1. Install Pipeline plug-in
-- [Pipeline](https://plugins.jenkins.io/workflow-aggregator/)
+- [Pipeline](https://plugins.jenkins.io/workflow-aggregator/){:target="_blank"}
 
 ### 2. Create Pipeline job in Jenkins
 

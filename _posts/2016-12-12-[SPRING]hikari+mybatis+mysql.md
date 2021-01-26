@@ -1,12 +1,16 @@
 ---
-
-categories: "spring"
 title: "[SPRING] JDBC - HIKARI CP + MYBATIS + MYSQL"
+excerpt: "Spring framework - spring jdbc db접근을 통한 Security 권한 획득하기"
 description: "Spring framework - spring jdbc db접근을 통한 Security 권한 획득하기"
 modified: 2016-12-13
-tags: [spring framwork, java config, security config, hikari, mybatis, mysql, spring4, java1.8, develop]
+categories: "Spring"
+tags: [spring framwork, java config, security config, hikari, mybatis, mysql, spring4, java1.8, Server]
+
 toc: true
 toc_sticky: true
+
+header:
+  teaser: /assets/images/OG-Spring.png
 ---
 
 ## JDBC - HIKARI CP + MYBATIS + MYSQL

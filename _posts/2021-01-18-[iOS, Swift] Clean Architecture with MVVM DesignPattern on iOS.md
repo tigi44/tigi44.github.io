@@ -1,15 +1,20 @@
 ---
-categories: "iOS"
 title: "[iOS, Swift] Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SPM)"
+excerpt: "Clean Architecture, MVVM DesignPattern"
 description: "Clean Architecture, MVVM DesignPattern"
 modified: 2021-01-18
+categories: "iOS"
 tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern, Architecture, Design Pattern]
+
 toc: true
 toc_sticky: true
 toc_label: "페이지 주요 목차"
+
+header:
+  teaser: /assets/images/swift-logo.png
 ---
 
-# Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager)
+<!-- # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager) -->
 - CleanArchitecture
 - MVVM (View->ViewModel->Model)
 - [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/)
@@ -556,7 +561,7 @@ public protocol AppDIInterface {
 }
 ```
 
-# 6. App Main
+## 5-2. App Main
 ### CleanArchitectureWithMVVMApp.swift
 - 뷰 초기화시에 의존성 주입 컨터이너인 AppDI를 사용하여, 해당 뷰에 맞는 의존성 주입
 

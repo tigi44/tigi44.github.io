@@ -1,14 +1,19 @@
 ---
-categories: "NginX"
 title: "[NginX] Install NginX on CentOS"
+excerpt: "Install NginX"
 description: "Install NginX"
 modified: 2020-06-29
+categories: "NginX"
 tags: [NginX, CentOS, proxy, Web, Server, HTTP, HTTPS]
+
 toc: true
 toc_sticky: true
+
+header:
+  teaser: /assets/images/nginx-Logo.png
 ---
 
-# 1. Install NginX Using yum
+## 1. Install NginX Using yum
 ### add NginX to a repo
 ```shell
 $ sudo vi /etc/yum.repos.d/nginx.repo
@@ -28,7 +33,7 @@ enabled=1
 $ sudo yum install -y nginx
 ```
 
-# 2. Firewall
+## 2. Firewall
 ### open 8080 port for NginX
 ```shell
 firewall-cmd --permanent --zone=public --add-port=8080/tcp
@@ -36,7 +41,7 @@ firewall-cmd --reload
 firewall-cmd --list-ports
 ```
 
-# 3. Configure NginX Server
+## 3. Configure NginX Server
 ```shell
 $ sudo vi /etc/nginx/conf.d/default.conf
 ```
@@ -67,13 +72,13 @@ $ sudo nginx -s reload
 ```
 
 
-# 4. Execute NginX demon
+## 4. Execute NginX demon
 ```shell
 $ systemctl start nginx
 $ systemctl enable nginx #for booting the server
 ```
 
-# # Configure for SSL (HTTP)
+## 5. Configure for SSL (HTTP)
 ```shell
 $ sudo vi /etc/nginx/conf.d/default.conf
 ```
@@ -111,7 +116,7 @@ server {
 }
 ```
 
-# # Issues NginX
+## 6. Issues NginX
 ### 502 Permission (Bad Gateway)
 ```shell
 # Setting for httpd of SELinux
@@ -122,7 +127,7 @@ $ sudo setsebool -P httpd_can_network_connect on
 $ sudo semanage port -a -t http_port_t -p tcp 8089
 ```
 
-# Reference
+## Reference
 - https://cofs.tistory.com/412
 - https://www.sitepoint.com/configuring-nginx-ssl-node-js/
 - https://velog.io/@jakeseo_me/Node에서-NGINX를-리버스-프록시로-사용하기-번역

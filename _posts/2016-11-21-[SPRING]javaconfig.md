@@ -1,12 +1,16 @@
 ---
-
-categories: "spring"
 title: "[SPRING] JAVA CONFIG"
+excerpt: "Spring framework - java config"
 description: "Spring framework - java config"
 modified: 2016-11-22
-tags: [spring framwork, java config, spring4, java1.8, develop]
+categories: "Spring"
+tags: [spring framwork, java config, spring4, java1.8, Server]
+
 toc: true
 toc_sticky: true
+
+header:
+  teaser: /assets/images/OG-Spring.png
 ---
 
 ## JAVA CONFIG
