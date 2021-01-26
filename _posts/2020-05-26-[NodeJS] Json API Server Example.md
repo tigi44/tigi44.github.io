@@ -9,7 +9,7 @@ tags: [NodeJS, Json, Back-end, Front-end, Server]
 classes: wide
 
 header:
-  teaser: /assets/images/nodejs-Logo.png
+  teaser: /assets/images/nodejs-logo.png
 ---
 
 ## NodeJS Json API Server Example Github

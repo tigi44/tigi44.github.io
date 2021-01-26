@@ -9,7 +9,7 @@ tags: [NodeJS, APNs, Back-end, Front-end, Server]
 classes: wide
 
 header:
-  teaser: /assets/images/nodejs-Logo.png
+  teaser: /assets/images/nodejs-logo.png
 ---
 
 ## NodeJS APNs Server Example Github
