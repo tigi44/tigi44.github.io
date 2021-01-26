@@ -20,7 +20,7 @@ title                    : "tigi44's blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "tigi44"
-description              : "iOS Dev. && WEB Dev."
+description              : "iOS Dev. || WEB Dev."
 url                      : "https://tigi44.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -95,7 +95,7 @@ analytics:
 author:
   name             : "tigi44"
   avatar           : "/assets/images/tigi.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "iOS Dev. && WEB Dev."
+  bio              : "iOS Dev. || WEB Dev."
   location         : "Pankyo, South Korea"
   email            : "onlytg@naver.com"
   links:
