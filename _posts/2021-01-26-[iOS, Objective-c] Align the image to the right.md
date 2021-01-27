@@ -1,7 +1,7 @@
 ---
-title: "[iOS, Objective-c] UIButton : image to right"
-excerpt: "UIButton : image to right"
-description: "UIButton : image to right"
+title: "[iOS, Objective-c] Align the image to the right"
+excerpt: "UIButton : Align the image to the right"
+description: "UIButton : Align the image to the right"
 modified: 2021-01-26
 categories: "iOS"
 tags: [iOS, Objective-c, UIButton]
