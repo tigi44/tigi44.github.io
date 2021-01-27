@@ -17,9 +17,9 @@ header:
 <!-- # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager) -->
 - CleanArchitecture
 - MVVM (View->ViewModel->Model)
-- [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/)
-- [Combine](https://developer.apple.com/documentation/combine)
-- [SwiftPackageManager](https://swift.org/package-manager/)
+- [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/){: target="_blank"}
+- [Combine](https://developer.apple.com/documentation/combine){: target="_blank"}
+- [SwiftPackageManager](https://swift.org/package-manager/){: target="_blank"}
 
 여러 iOS 프로젝트에 사용하는 Architecture들 중, Clean Architecture와 MVVM 패턴을 사용하여 프로젝트 구조를 설계해 봅니다.
 

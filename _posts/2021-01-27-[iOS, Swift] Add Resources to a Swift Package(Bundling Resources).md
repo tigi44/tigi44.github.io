@@ -192,7 +192,7 @@ final class ExternalTests: XCTestCase {
 ```
 
 ## SourceCode
-- [ResourcesSPM](https://github.com/tigi44/ResourcesSPM)
+- [ResourcesSPM](https://github.com/tigi44/ResourcesSPM){: target="_blank"}
 
 ## Reference
-- [https://developer.apple.com/documentation/swift_packages/bundling_resources_with_a_swift_package](https://developer.apple.com/documentation/swift_packages/bundling_resources_with_a_swift_package)
+- [https://developer.apple.com/documentation/swift_packages/bundling_resources_with_a_swift_package](https://developer.apple.com/documentation/swift_packages/bundling_resources_with_a_swift_package){: target="_blank"}
