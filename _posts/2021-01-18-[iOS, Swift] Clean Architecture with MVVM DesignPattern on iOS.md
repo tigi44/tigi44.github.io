@@ -123,22 +123,26 @@ b.printNumber()
   - `Presentation Layer`: UI관련 레이어(View, ViewModel)
   - `Domain Layer`: 비지니스 로직 담당(Use Case)
   - `Data Layer`: 원격/로컬 데이터소스에서 데이터를 가져옴
+
+![cleanArchitecture](/assets/images/post/cleanArchitecture/cleanarchitecture.png)
+
+- 각 레이어들의 Dependency 방향은 아래와 같이 원안쪽으로 향하고 있음
+
+![withMVVM](/assets/images/post/cleanArchitecture/withMVVM.png)
+
 - 레이어중 UI부분을 담당하는 Presentation Layer 부분은 MVVM 디자인 패턴으로 적용
   - `MVVM 패턴`: VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
 
-![cleanArchitecture](/assets/images/post/cleanArchitecture/cleanarchitecture.png)
-![withMVVM](/assets/images/post/cleanArchitecture/withMVVM.png)
-
 ## 0-2. Clean Architecture 구조내의 데이터 흐름 및 의존성 방향
 ![dataFlow](/assets/images/post/cleanArchitecture/dataFlow.png)
-- DomainLayer와 DataLayer 사이에서는 Dependency Inversion 구현
+- 여기서 주목해야 될 점은, DomainLayer와 DataLayer 사이에서는 Dependency Inversion으로 구현된 부분
+- Dependency Inversion 구현을 통해, 원내부에서 원밖으로 실행을 시킬수 있는 구조가 가능, 이는 ViewModel(PresentationLayer)에서 UseCase(DomainLayer)를 통해 Repository(DataLayer)의 데이터를 받아서 사용할 수 있는 구조로 개발이 가능해짐
 
 # 1. SPM(Swift Package Manager)를 이용한 앱 구조 및 Layer별 의존성 구현
 ## 1-1. 프로젝트 구조
 ![spm](/assets/images/post/cleanArchitecture/spm.png)
 
 ## 1-2. Package.swift
-- Clean Architecture의 각 Layer별 의존성 구현
 
 ```swift
 import PackageDescription
@@ -175,6 +179,7 @@ let package = Package(
     ]
 )
 ```
+- Clean Architecture의 각 Layer별 의존성 구현
 
 # 2. Domain Layer 구현
 ## 2-1. Entity
@@ -228,7 +233,7 @@ public protocol GroupRepositoryInterface {
 }
 ```  
 - `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
-- `GroupRepositoryInterface`를 DomainLayer안에 선언함으로써, DataLayer에 대한 의존성을 갖지 않음 (Dependency Inversion)
+- `GroupRepositoryInterface` 부분과 처음부분에서 설명한 [의존성 주입 (DI: Dependency Injection)](#의존성-주입-di-dependency-injection) 부분이 DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함
 
 # 3. Presentation Layer 구현
 - MVVM 디자인 패턴으로 구현
@@ -337,8 +342,6 @@ public struct GroupView: View {
 
 # 4. Data Layer 구현
 ## 4-1. Repository
-- `DataSource`를 통해 데이터 값을 가져오는 역할
-
 ### GroupRepository.swift
 ```swift
 import Foundation
@@ -360,11 +363,21 @@ public final class GroupRepository: GroupRepositoryInterface {
     public func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable? {
 
         return groupDataSource.fetchMyGroupList { result in
-            completion(result)
+          switch result {
+          case .success(let myGroupModels):
+              var myGroupEntities = [MyGroupEntity]()
+              for myGroupModel in myGroupModels {
+                  myGroupEntities.append(myGroupModel.dotMyGroupEntity())
+              }
+              completion(.success(myGroupEntities))
+          case .failure(let error):
+              completion(.failure(error))
+          }
         }
     }
 }
 ```
+- `DataSource`를 통해 데이터 값을 가져오고, 해당 모델을 Domain Layer 에서 사용할 수 있는 Entity등의 포맷으로 전환 시켜주는 부분
 
 ## 4-2. DataSource
 - DB 및 외부 API등을 통해 데이터를 가져오는 부분
@@ -385,7 +398,7 @@ public struct GroupModel: Codable {
 }
 ```
 - `DataSource`에서 가져오는 데이터 모델
-- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환(Data Object Transfer)
+- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환가능(Data Object Transfer)
 
 ### GroupLocalDataSource (GroupDataSource.swift)
 ```swift
@@ -394,7 +407,7 @@ import Combine
 import DomainLayer
 
 public protocol GroupDataSourceInterface {
-    func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
+    func fetchMyGroupList(completion: @escaping (Result<[GroupModel], Error>) -> Void) -> Cancellable?
 }
 
 public final class GroupLocalDataSource: GroupDataSourceInterface {
@@ -413,12 +426,11 @@ public final class GroupLocalDataSource: GroupDataSourceInterface {
 
     public init() {}
 
-    public func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable? {
+    public func fetchMyGroupList(completion: @escaping (Result<[GroupModel], Error>) -> Void) -> Cancellable? {
         return Just(GroupLocalDataSource.myGroups)
             .tryMap { try JSONSerialization.data(withJSONObject: $0, options: .prettyPrinted) }
             .decode(type: [GroupModel].self, decoder: JSONDecoder())
             .replaceError(with: [])
-            .map({ $0.compactMap { $0.dotMyGroupEntity() }})
             .eraseToAnyPublisher()
             .sink { myGroups in
                 completion(.success(myGroups))
@@ -444,7 +456,7 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
         self.urlString = urlString
     }
 
-    public func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable? {
+    public func fetchMyGroupList(completion: @escaping (Result<[GroupModel], Error>) -> Void) -> Cancellable? {
 
         return URLSession
             .shared
@@ -452,7 +464,6 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
             .map(\.data)
             .decode(type: [GroupModel].self, decoder: JSONDecoder())
             .replaceError(with: [])
-            .map({ $0.compactMap { $0.dotMyGroupEntity() }})
             .eraseToAnyPublisher()
             .sink { myGroups in
                 completion(.success(myGroups))
