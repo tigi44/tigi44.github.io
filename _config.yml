@@ -18,7 +18,7 @@ minimal_mistakes_skin    : "default" # "default", "air", "aqua", "contrast", "da
 locale                   : "en-US"
 title                    : "Calm and Stable"
 title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
+subtitle                 : "tigi44`s Blog" # site tagline that appears below site title in masthead
 name                     : "tigi44"
 description              : "tigi44`s Software Development Blog"
 url                      : "https://tigi44.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
@@ -95,7 +95,7 @@ analytics:
 author:
   name             : "tigi44"
   avatar           : "/assets/images/tigi.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "iOS App & WEB App Developer"
+  bio              : "iOS App & WEB App <br> Developer"
   location         : "Pangyo, KR"
   email            : #"onlytg@naver.com"
   links:
