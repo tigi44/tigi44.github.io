@@ -12,7 +12,8 @@ header:
   teaser: /assets/images/swift-logo.png
 ---
 
-<!-- # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager) -->
+# 개요
+
 - [Clean Architecture](/etc/The-Clean-Architecture/){: target="_blank"}
 - [MVVM (View->ViewModel->Model)](/etc/MVVM-Pattern/){: target="_blank"}
 - [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/){: target="_blank"}
@@ -25,9 +26,9 @@ header:
 
 이렇게 분리된 레이어들은 타겟으로 만들어 `Swift Package Manager`에 적용하면 레이어별 의존성 관리를 쉽게 할 수 있습니다.
 
-전체적인 앱 동작은 `Switf의 Combine`을 기반으로 하여 비동기적인 이벤트 기반의 동작을 할 수 있도록 구현합니다.
-
 UI부분은 `SwiftUI`와 `MVVM 패턴`으로 적용하여 쉽게 유지보수 할 수 있도록 합니다.
+
+특히, MVVM 패턴에서 View와 ViewModel사이에는 `Combine`을 사용하여 Data Binding을 간단히 처리합니다.
 
 iOS 프로젝트에 Clean Architecture를 적용하기전에 먼저 `의존성 주입`에 관해 알아야 전체적인 구조 이해에 도움이 됩니다.
 
@@ -118,9 +119,9 @@ b.printNumber()
 
 ## 0-1. Clean Architecture 와 MVVM 구조 사용
 - 전체적인 앱 구조는 Clean Architecture 기반으로 레이어링
-  - `Presentation Layer`: UI관련 레이어(View, ViewModel)
-  - `Domain Layer`: 비지니스 로직 담당(Use Case)
-  - `Data Layer`: 원격/로컬 데이터소스에서 데이터를 가져옴
+  - `Presentation Layer`: UI관련 레이어
+  - `Domain Layer`: 비지니스 룰과 로직 담당 레이어
+  - `Data Layer`: 원격/로컬등 외부에서 데이터를 가져오는 레이어
 
 ![cleanArchitecture](/assets/images/post/cleanArchitecture/cleanarchitecture.png)
 
@@ -128,13 +129,14 @@ b.printNumber()
 
 ![withMVVM](/assets/images/post/cleanArchitecture/withMVVM.png)
 
-- 레이어중 UI부분을 담당하는 Presentation Layer 부분은 MVVM 디자인 패턴으로 적용
-  - `MVVM 패턴`: VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
+- 레이어중 UI부분을 담당하는 Presentation Layer 부분은 아래 이미지와 같은 `MVVM 패턴`으로 적용
+
+![mvvm](/assets/images/post/mvvm/MVVMPattern.png)
 
 ## 0-2. Clean Architecture 구조내의 데이터 흐름 및 의존성 방향
 ![dataFlow](/assets/images/post/cleanArchitecture/dataFlow.png)
 - 여기서 주목해야 될 점은, DomainLayer와 DataLayer 사이에서는 Dependency Inversion으로 구현된 부분
-- Dependency Inversion 구현을 통해, 원내부에서 원밖으로 실행을 시킬수 있는 구조가 가능, 이는 ViewModel(PresentationLayer)에서 UseCase(DomainLayer)를 통해 Repository(DataLayer)의 데이터를 받아서 사용할 수 있는 구조로 개발이 가능해짐
+- Dependency Inversion 구현을 통해, 원내부에서 원밖으로 실행을 시킬수 있는 구조가 가능, 이는 ViewModel(PresentationLayer)에서 UseCase(DomainLayer)를 통해 Repository(DataLayer)의 데이터를 받아서 사용할 수 있는 구조로 개발이 가능하게함
 
 # 1. SPM(Swift Package Manager)를 이용한 앱 구조 및 Layer별 의존성 구현
 ## 1-1. 프로젝트 구조
@@ -231,11 +233,11 @@ public protocol GroupRepositoryInterface {
 }
 ```
 - `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
-- `GroupRepositoryInterface` 부분과 처음부분에서 설명한 [의존성 주입 (DI: Dependency Injection)](#의존성-주입-di-dependency-injection) 부분이 DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함
+- DataLayer에서 구현될 GroupRepository에 대한 인터페이스(`GroupRepositoryInterface`)를 DomainLayer에서 선언을 함으로써, DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함. 즉, 하위 계층인 DomainLayer에서 상위 계층의 DataLayer의 호출 부분을 알 수 있게 됨
 
 # 3. Presentation Layer 구현
-- MVVM 디자인 패턴으로 구현
-- VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL(Entity)
+- `MVVM 패턴`으로 구현
+- View와 ViewModel 사이는 `Combine`으로 `DataBinding` 처리
 
 ## 3-1. ViewModel
 ### MyGroupListViewModel.swift
@@ -376,7 +378,7 @@ public final class GroupRepository: GroupRepositoryInterface {
     }
 }
 ```
-- `DataSource`를 통해 데이터 값을 가져오고, 해당 모델을 Domain Layer 에서 사용할 수 있는 Entity등의 포맷으로 전환 시켜주는 부분
+- `DataSource`를 통해 데이터 값을 가져오고, 해당 데이터을 Domain Layer 에서 사용할 수 있는 Entity등의 포맷으로 전환 시켜주는 부분
 
 ## 4-2. DataSource
 - DB 및 외부 API등을 통해 데이터를 가져오는 부분
@@ -395,7 +397,7 @@ public struct GroupModelDTO: Codable {
 }
 ```
 - `DataSource`에서 가져오는 데이터 모델
-- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환가능(Data Transfer Object)
+- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환(Data Transfer Object)
 
 ### GroupLocalDataSource (GroupDataSource.swift)
 ```swift
@@ -436,7 +438,7 @@ public final class GroupLocalDataSource: GroupDataSourceInterface {
 }
 
 ```
-- `DataSource`의 한 종류로 테스트를 위해 앱 내부의 값을 사용 하도록 구현
+- `DataSource`의 한 종류로 테스트를 위해 앱 내부의 로컬 값을 사용 하도록 구현
 - Combine의 Just(Publisher)로 구현
 
 ### GroupRemoteDataSource (GroupDataSource.swift)
@@ -469,7 +471,7 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
 }
 ```
 - 외부 API 호출할 수 있는 `DataSource`
-- URLSession을 Combine구조로  이용할 수 있는 dataTaskPublisher 사용
+- URLSession을 Combine구조로 이용할 수 있는 dataTaskPublisher 사용
 
 # 5. App Layer (의존성 주입 컨테이너)
 - 앱의 진입점
@@ -558,7 +560,7 @@ public class AppDI: AppDIInterface {
 ```
 
 ### AppDIInterface.swift
-- `AppDIInterface`는 [PresentationLayer](#3-presentation-layer-구현)안에 구현
+- `AppDIInterface`는 [PresentationLayer](#3-presentation-layer-구현)안에 구현 (SubView들에 대한 의존성 주입을 상위 View에서 해줘야 하는 경우가 생기기 때문에, View와 동일한 레이어에 인터페이스 존재)
 - `AppLayer`는 최상위 레이어, `AppLayer`->`PresentationLayer` 하위 레이어들에 대해 의존성을 갖음
 
 ```swift
