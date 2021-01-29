@@ -15,7 +15,7 @@ header:
 ---
 
 <!-- # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager) -->
-- CleanArchitecture
+- [Clean Architecture](/etc/The-Clean-Architecture/){: target="_blank"}
 - MVVM (View->ViewModel->Model)
 - [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/){: target="_blank"}
 - [Combine](https://developer.apple.com/documentation/combine){: target="_blank"}
@@ -226,7 +226,7 @@ public final class FetchMyGroupListUseCase: FetchMyGroupListUseCaseInterface {
 public protocol GroupRepositoryInterface {
     func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
 }
-```  
+```
 - `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
 - `GroupRepositoryInterface`를 DomainLayer안에 선언함으로써, DataLayer에 대한 의존성을 갖지 않음 (Dependency Inversion)
 
