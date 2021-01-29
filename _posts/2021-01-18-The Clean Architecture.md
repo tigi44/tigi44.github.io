@@ -2,7 +2,7 @@
 title: "The Clean Architecture"
 excerpt: "About The Clean Architecture"
 description: "About The Clean Architecture"
-last_modified_at: 2021-01-28T14:00:00+09:00
+last_modified_at: 2021-01-18T14:00:00+09:00
 categories: "ETC"
 tags: [Development, Clean Architecture, Architecture]
 
@@ -85,5 +85,5 @@ Dependency Inversion은 상위 계층인 `Presenter`의 `Output Port`인터페�
 `Clean Architecture`는 의존성 규칙과 관심사 분리를 통해, 테스트하기 쉽고 구현에 많은 이점을 갖는 시스템을 만들어줍니다.
 
 ## Reference
-* [https://medium.com/@afsara.504/clean-architecture-swift-8a5834aecf6](https://medium.com/@afsara.504/clean-architecture-swift-8a5834aecf6)
-* [http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+* [https://medium.com/@afsara.504/clean-architecture-swift-8a5834aecf6](https://medium.com/@afsara.504/clean-architecture-swift-8a5834aecf6){: target="_blank"}
+* [http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html){: target="_blank"}

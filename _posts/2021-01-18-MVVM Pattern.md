@@ -2,7 +2,7 @@
 title: "MVVM Pattern"
 excerpt: "About the MVVM Pattern"
 description: "About the MVVM Pattern"
-last_modified_at: 2021-01-29T14:00:00+09:00
+last_modified_at: 2021-01-18T14:00:00+09:00
 categories: "ETC"
 tags: [Development, MVVM, Design Pattern, Architecture]
 
@@ -33,5 +33,5 @@ MVVM은 `Model-View-ViewModel` 의 세 가지 구성요소로 되었있다.
 사용자의 상호작용을 수신하고, 이를 Data Bunding을 통해 ViewModel에 전달한다.
 
 ## Reference
-* [https://ko.wikipedia.org/wiki/모델-뷰-뷰모델](https://ko.wikipedia.org/wiki/모델-뷰-뷰모델)
-* [https://levelup.gitconnected.com/implement-mvvm-in-swiftui-47f76dc28f1a](https://levelup.gitconnected.com/implement-mvvm-in-swiftui-47f76dc28f1a)
+* [https://ko.wikipedia.org/wiki/모델-뷰-뷰모델](https://ko.wikipedia.org/wiki/모델-뷰-뷰모델){: target="_blank"}
+* [https://levelup.gitconnected.com/implement-mvvm-in-swiftui-47f76dc28f1a](https://levelup.gitconnected.com/implement-mvvm-in-swiftui-47f76dc28f1a){: target="_blank"}
