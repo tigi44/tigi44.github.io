@@ -7,7 +7,7 @@ categories: "iOS"
 tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern, Architecture, Design Pattern]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 toc_label: "페이지 주요 목차"
 
 header:
