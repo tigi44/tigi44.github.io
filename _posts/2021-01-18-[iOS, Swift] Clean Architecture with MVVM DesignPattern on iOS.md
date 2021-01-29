@@ -282,7 +282,7 @@ public final class MyGroupListViewModel: ObservableObject, MyGroupListViewModelI
 ```swift
 import SwiftUI
 
-public struct GroupView: View {
+public struct MyGroupListView: View {
 
     struct MyGroupView: View {
 
