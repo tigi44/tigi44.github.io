@@ -6,9 +6,7 @@ modified: 2021-01-18
 categories: "iOS"
 tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern, Architecture, Design Pattern]
 
-toc: true
 toc_sticky: false
-toc_label: "페이지 주요 목차"
 
 header:
   teaser: /assets/images/swift-logo.png
