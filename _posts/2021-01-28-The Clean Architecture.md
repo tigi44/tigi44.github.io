@@ -7,6 +7,9 @@ categories: "ETC"
 tags: [Development, Clean Architecture, Architecture]
 
 toc: true
+
+header:
+  teaser: /assets/images/post/cleanArchitecture/theCleanArchitecture.jpg
 ---
 
 ## Architecture?
