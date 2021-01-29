@@ -231,13 +231,13 @@ public final class FetchMyGroupListUseCase: FetchMyGroupListUseCaseInterface {
 public protocol GroupRepositoryInterface {
     func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
 }
-```  
+```
 - `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
 - `GroupRepositoryInterface` 부분과 처음부분에서 설명한 [의존성 주입 (DI: Dependency Injection)](#의존성-주입-di-dependency-injection) 부분이 DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함
 
 # 3. Presentation Layer 구현
 - MVVM 디자인 패턴으로 구현
-- VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL
+- VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL(Entity)
 
 ## 3-1. ViewModel
 ### GroupViewModel.swift
@@ -367,7 +367,7 @@ public final class GroupRepository: GroupRepositoryInterface {
           case .success(let myGroupModels):
               var myGroupEntities = [MyGroupEntity]()
               for myGroupModel in myGroupModels {
-                  myGroupEntities.append(myGroupModel.dotMyGroupEntity())
+                  myGroupEntities.append(myGroupModel.dtoMyGroupEntity())
               }
               completion(.success(myGroupEntities))
           case .failure(let error):
@@ -382,23 +382,23 @@ public final class GroupRepository: GroupRepositoryInterface {
 ## 4-2. DataSource
 - DB 및 외부 API등을 통해 데이터를 가져오는 부분
 
-### DataModel & DOT(Data Object Transfer) (GroupDataSource.swift)
+### DataModel & DTO(Data Transfer Object) (GroupDataSource.swift)
 ```swift
-public struct GroupModel: Codable {
+public struct GroupModelDTO: Codable {
     let image: String
     let name: String
     let date: String
     let address: String
     let memberCount: Int
 
-    // DOT: Data Object Transfer
-    public func dotMyGroupEntity() -> MyGroupEntity {
+    // DTO: Data Transfer Object
+    public func dtoMyGroupEntity() -> MyGroupEntity {
         return MyGroupEntity(id: self.name, image: self.image, name: self.name, date: self.date)
     }
 }
 ```
 - `DataSource`에서 가져오는 데이터 모델
-- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환가능(Data Object Transfer)
+- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환가능(Data Transfer Object)
 
 ### GroupLocalDataSource (GroupDataSource.swift)
 ```swift
@@ -407,7 +407,7 @@ import Combine
 import DomainLayer
 
 public protocol GroupDataSourceInterface {
-    func fetchMyGroupList(completion: @escaping (Result<[GroupModel], Error>) -> Void) -> Cancellable?
+    func fetchMyGroupList(completion: @escaping (Result<[GroupModelDTO], Error>) -> Void) -> Cancellable?
 }
 
 public final class GroupLocalDataSource: GroupDataSourceInterface {
@@ -426,10 +426,10 @@ public final class GroupLocalDataSource: GroupDataSourceInterface {
 
     public init() {}
 
-    public func fetchMyGroupList(completion: @escaping (Result<[GroupModel], Error>) -> Void) -> Cancellable? {
+    public func fetchMyGroupList(completion: @escaping (Result<[GroupModelDTO], Error>) -> Void) -> Cancellable? {
         return Just(GroupLocalDataSource.myGroups)
             .tryMap { try JSONSerialization.data(withJSONObject: $0, options: .prettyPrinted) }
-            .decode(type: [GroupModel].self, decoder: JSONDecoder())
+            .decode(type: [GroupModelDTO].self, decoder: JSONDecoder())
             .replaceError(with: [])
             .eraseToAnyPublisher()
             .sink { myGroups in
@@ -456,13 +456,13 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
         self.urlString = urlString
     }
 
-    public func fetchMyGroupList(completion: @escaping (Result<[GroupModel], Error>) -> Void) -> Cancellable? {
+    public func fetchMyGroupList(completion: @escaping (Result<[GroupModelDTO], Error>) -> Void) -> Cancellable? {
 
         return URLSession
             .shared
             .dataTaskPublisher(for: URL(string: urlString)!)
             .map(\.data)
-            .decode(type: [GroupModel].self, decoder: JSONDecoder())
+            .decode(type: [GroupModelDTO].self, decoder: JSONDecoder())
             .replaceError(with: [])
             .eraseToAnyPublisher()
             .sink { myGroups in
