@@ -15,7 +15,7 @@ header:
 ---
 
 <!-- # Clean Architecture With MVVM on iOS(using SwiftUI, Combine, SwiftPackageManager) -->
-- CleanArchitecture
+- [Clean Architecture](/etc/The-Clean-Architecture/){: target="_blank"}
 - MVVM (View->ViewModel->Model)
 - [SwiftUI](https://developer.apple.com/kr/xcode/swiftui/){: target="_blank"}
 - [Combine](https://developer.apple.com/documentation/combine){: target="_blank"}
