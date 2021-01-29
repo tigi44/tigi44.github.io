@@ -202,7 +202,7 @@ public struct MyGroupEntity: Identifiable {
 - 외부 변화에 변경될 가능성이 가장 적은 데이터구조
 
 ## 2-2. UseCase
-### FetchGroupListUseCase.swift
+### FetchMyGroupListUseCase.swift
 ```swift
 import Foundation
 import Combine
@@ -238,7 +238,7 @@ public protocol GroupRepositoryInterface {
 - VIEW -Dependency-> VIEWMODEL -Dependency-> MODEL(Entity)
 
 ## 3-1. ViewModel
-### GroupViewModel.swift
+### MyGroupListViewModel.swift
 ```swift
 import Foundation
 import Combine
@@ -278,28 +278,29 @@ public final class MyGroupListViewModel: ObservableObject, MyGroupListViewModelI
 - ViewModel이 Model(Entity)에 대해 의존성을 갖음(ViewModel -> Model)
 
 ## 3-2. View
-### GroupView.swift
+### MyGroupListView.swift
 ```swift
 import SwiftUI
-import DomainLayer
 
 public struct GroupView: View {
 
     struct MyGroupView: View {
 
-        let myGroupEntity: MyGroupEntity
+        let image: String
+        let name: String
+        let date: String
 
         var body: some View {
             VStack(alignment: .leading, spacing: 10) {
-                Image(myGroupEntity.image)
+                Image(image)
                     .resizable()
                     .frame(width: 130, height: 130, alignment: .center)
                     .cornerRadius(5)
                 VStack(alignment: .leading) {
-                    Text(myGroupEntity.name)
+                    Text(name)
                         .font(.headline)
                         .fontWeight(.regular)
-                    Text(myGroupEntity.date)
+                    Text(date)
                         .font(.footnote)
                 }
             }
@@ -316,7 +317,7 @@ public struct GroupView: View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
                 Text("내 그룹 목록")
-                    .font(.title2)
+                    .font(.title)
                     .fontWeight(.bold)
                 Spacer()
             }
@@ -324,7 +325,7 @@ public struct GroupView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(self.viewModel.myGroups) { myGroupEntity in
-                        MyGroupView(myGroupEntity: myGroupEntity)
+                        MyGroupView(image: myGroupEntity.image, name: myGroupEntity.name, date: myGroupEntity.date)
                     }
                 }
             }
@@ -386,8 +387,6 @@ public struct GroupModelDTO: Codable {
     let image: String
     let name: String
     let date: String
-    let address: String
-    let memberCount: Int
 
     // DTO: Data Transfer Object
     public func dtoMyGroupEntity() -> MyGroupEntity {
@@ -582,7 +581,7 @@ import PresentationLayer
 struct CleanArchitectureWithMVVMApp: App {
     var body: some Scene {
         WindowGroup {
-            GroupView(viewModel: AppDI.shared.myGroupListDependencies())
+            MyGroupListView(viewModel: AppDI.shared.myGroupListDependencies())
         }
     }
 }
