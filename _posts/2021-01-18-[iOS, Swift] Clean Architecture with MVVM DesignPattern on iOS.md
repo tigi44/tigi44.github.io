@@ -125,11 +125,8 @@ b.printNumber()
 
 ![cleanArchitecture](/assets/images/post/cleanArchitecture/cleanarchitecture.png)
 
-- 각 레이어들의 Dependency 방향은 아래와 같이 원안쪽으로 향하고 있음
-
-![withMVVM](/assets/images/post/cleanArchitecture/withMVVM.png)
-
-- 레이어중 UI부분을 담당하는 Presentation Layer 부분은 아래 이미지와 같은 `MVVM 패턴`으로 적용
+- 각 레이어들의 `Dependency` 방향은 모두 원밖에서 원안쪽으로 향하고 있음
+- 레이어중 UI부분을 담당하는 `Presentation Layer` 부분은 아래 이미지와 같은 `MVVM 패턴`으로 적용
 
 ![mvvm](/assets/images/post/mvvm/MVVMPattern.png)
 
@@ -201,7 +198,9 @@ public struct MyGroupEntity: Identifiable {
     }
 }
 ```
-- 외부 변화에 변경될 가능성이 가장 적은 데이터구조
+- 원의 가장 내부 계층
+- `외부 변화에 변경될 가능성이 없고`, Business Rule의 핵심기능을 담당하는 데이터구조
+- 상위계층에 의존성을 갖고 있지 않아 독립적으로 비지니스 기능을 수행할 수 있어야 함
 
 ## 2-2. UseCase
 ### FetchMyGroupListUseCase.swift
@@ -232,10 +231,14 @@ public protocol GroupRepositoryInterface {
     func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
 }
 ```
+- `Business Logic`을 처리하는 부분
 - `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
-- DataLayer에서 구현될 GroupRepository에 대한 인터페이스(`GroupRepositoryInterface`)를 DomainLayer에서 선언을 함으로써, DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함. 즉, 하위 계층인 DomainLayer에서 상위 계층의 DataLayer의 호출 부분을 알 수 있게 됨
+- `Dependency Inversion`
+  - DataLayer에서 구현될 GroupRepository에 대한 인터페이스(`GroupRepositoryInterface`)를 DomainLayer에서 선언을 함으로써, DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함.
+  - 즉, 하위 계층인 DomainLayer에서 상위 계층의 DataLayer의 호출 부분을 알 수 있게 됨
 
 # 3. Presentation Layer 구현
+- UI 구현 Layer
 - `MVVM 패턴`으로 구현
 - View와 ViewModel 사이는 `Combine`으로 `DataBinding` 처리
 
@@ -378,10 +381,11 @@ public final class GroupRepository: GroupRepositoryInterface {
     }
 }
 ```
-- `DataSource`를 통해 데이터 값을 가져오고, 해당 데이터을 Domain Layer 에서 사용할 수 있는 Entity등의 포맷으로 전환 시켜주는 부분
+- DataSource를 통해 데이터 값을 가져오고, 해당 모델을 Domain Layer 에서 사용할 수 있는 Entity등의 포맷으로 전환 시켜주는 부분
 
 ## 4-2. DataSource
 - DB 및 외부 API등을 통해 데이터를 가져오는 부분
+- API Framework(Alamofire)등으로 사용할 수 있음
 
 ### DataModel & DTO(Data Transfer Object) (GroupDataSource.swift)
 ```swift
@@ -396,8 +400,10 @@ public struct GroupModelDTO: Codable {
     }
 }
 ```
-- `DataSource`에서 가져오는 데이터 모델
-- 데이터 값을 [Domain Layer](#2-domain-layer-구현)에서 사용하는 Entity값으로 변환(Data Transfer Object)
+- `DataSource`에서 데이터를 파싱하는 모델
+- 파싱된 데이터 값은 `DTO(Data Transfer Object)`를 통해 Domain Layer에서 사용하는 `Entity`로 변환
+- 데이터 파싱부분을 `DataModelDTO로 만들어서 사용`하기 때문에, DataSource(외부 api, DB등)의 속성 변경에 대해 `DTO부분만 수정`되고, Entity에는 전혀 영향이 없음(Entity는 외부 요인에 의해 변경이 없어야함)
+- DataLayer에서의 변경사항이 다른 계층에 영향을 주지 않음
 
 ### GroupLocalDataSource (GroupDataSource.swift)
 ```swift
