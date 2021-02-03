@@ -42,9 +42,19 @@ firewall-cmd --list-ports
 ```
 
 ## 3. Configure NginX Server
+
+### nginx.conf
+```shell
+$ cat /etc/nginx/nginx.conf
+```
+
+### Configure Server
 ```shell
 $ sudo vi /etc/nginx/conf.d/default.conf
 ```
+
+- listen 8080 port -> proxy to 3000 port
+
 ```shell
 server {
   listen       8080;
@@ -76,6 +86,15 @@ $ sudo nginx -s reload
 ```shell
 $ systemctl start nginx
 $ systemctl enable nginx #for booting the server
+```
+
+- systemctl
+
+```shell
+$ systemctl status nginx
+$ systemctl stop nginx
+$ systemctl restart nginx
+$ systemctl reload nginx
 ```
 
 ## 5. Configure for SSL (HTTP)
