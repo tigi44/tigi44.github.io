@@ -22,7 +22,9 @@ header:
 
 여러 iOS 프로젝트에 사용하는 Architecture들 중, Clean Architecture와 MVVM 패턴을 사용하여 프로젝트 구조를 설계해 봅니다.
 
-`Clean Architecture` 구조를 이용하여 앱을 역할별 레이어들로 분리합니다.
+Clean Architecture와 MVVM 패턴을 프로젝트에 어떻게 적용할지 살펴보고, 이를 이용하여 `일별 날씨정보를 보여주는 앱`을 예제로 만들어 봅니다.
+
+먼저 프로젝트의 구조는 `Clean Architecture`를 이용하여 역할별 레이어들로 분리합니다.
 
 이렇게 분리된 레이어들은 타겟으로 만들어 `Swift Package Manager`에 적용하면 레이어별 의존성 관리를 쉽게 할 수 있습니다.
 
@@ -173,27 +175,48 @@ let package = Package(
         .target(
             name: "PresentationLayer",
             dependencies: ["DomainLayer"]),
+
+
+        //MARK: - Tests
+        .testTarget(
+            name: "DataLayerTests",
+            dependencies: ["DataLayer"]),
+
+        .testTarget(
+            name: "DomainLayerTests",
+            dependencies: ["DomainLayer"]),
+
+        .testTarget(
+            name: "PresentationLayerTests",
+            dependencies: ["PresentationLayer"]),
     ]
 )
 ```
 - Clean Architecture의 각 Layer별 의존성 구현
 
 # 2. Domain Layer 구현
+- Business Logic 구현 Layer
+
 ## 2-1. Entity
-### GroupEntity.swift
+### WeatherEntity.swift
 ```swift
 import Foundation
 
-public struct MyGroupEntity: Identifiable {
+public struct WeatherEntity: Identifiable {
     public let id: String
-    public let image: String
-    public let name: String
-    public let date: String
+    public let icon: String
+    public let location: String
+    public let temperature: Float
+    public let description: String
+    public let date: Date
 
-    public init(id: String, image: String, name: String, date: String) {
+    public init(id: String, icon: String, location: String, temperature: Float, description: String, date: Date)
+    {
         self.id = id
-        self.image = image
-        self.name = name
+        self.icon = icon
+        self.location = location
+        self.temperature = temperature
+        self.description = description
         self.date = date
     }
 }
@@ -203,38 +226,38 @@ public struct MyGroupEntity: Identifiable {
 - 상위계층에 의존성을 갖고 있지 않아 독립적으로 비지니스 기능을 수행할 수 있어야 함
 
 ## 2-2. UseCase
-### FetchMyGroupListUseCase.swift
+### FetchDailyWeatherUseCase.swift
 ```swift
 import Foundation
 import Combine
 
-public protocol FetchMyGroupListUseCaseInterface {
-    func execute(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
+public protocol FetchDailyWeatherUseCaseInterface {
+    func execute(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable?
 }
 
-public final class FetchMyGroupListUseCase: FetchMyGroupListUseCaseInterface {
+public final class FetchDailyWeatherUseCase: FetchDailyWeatherUseCaseInterface {
 
-    private let groupRepository: GroupRepositoryInterface
+    private let repository: WeatherRepositoryInterface
 
-    public init(groupRepository: GroupRepositoryInterface) {
-        self.groupRepository = groupRepository
+    public init(repository: WeatherRepositoryInterface) {
+        self.repository = repository
     }
 
-    public func execute(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable? {
-        return groupRepository.fetchMyGroupList { result in
+    public func execute(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable? {
+        return repository.fetchDailyWeather { result in
             completion(result)
         }
     }
 }
 
-public protocol GroupRepositoryInterface {
-    func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
+public protocol WeatherRepositoryInterface {
+    func fetchDailyWeather(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable?
 }
 ```
 - `Business Logic`을 처리하는 부분
 - `execute()` 부분이 Business Logic을 처리하는 부분, 별도의 비지니스 로직이 필요하면 이곳에 추가
 - `Dependency Inversion`
-  - DataLayer에서 구현될 GroupRepository에 대한 인터페이스(`GroupRepositoryInterface`)를 DomainLayer에서 선언을 함으로써, DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함.
+  - DataLayer에서 구현될 WeatherRepository에 대한 인터페이스(`WeatherRepositoryInterface`)를 DomainLayer에서 선언을 함으로써, DomainLayer와 DataLayer 간의 `Dependency Inversion` 구현을 가능하게 함
   - 즉, 하위 계층인 DomainLayer에서 상위 계층의 DataLayer의 호출 부분을 알 수 있게 됨
 
 # 3. Presentation Layer 구현
@@ -243,37 +266,37 @@ public protocol GroupRepositoryInterface {
 - View와 ViewModel 사이는 `Combine`으로 `DataBinding` 처리
 
 ## 3-1. ViewModel
-### MyGroupListViewModel.swift
+### DailyWeatherViewModel.swift
 ```swift
 import Foundation
 import Combine
 import DomainLayer
 
-public protocol MyGroupListViewModelInput {
+public protocol DailyWeatherViewModelInput {
     func executeFetch()
 }
 
-public protocol MyGroupListViewModelOutput {
-    var myGroups: [MyGroupEntity] { get }
+public protocol DailyWeatherViewModelOutput {
+    var dailyWeather: [WeatherEntity] { get }
 }
 
-public final class MyGroupListViewModel: ObservableObject, MyGroupListViewModelInput, MyGroupListViewModelOutput {
+public final class DailyWeatherViewModel: ObservableObject, DailyWeatherViewModelInput, DailyWeatherViewModelOutput {
 
-    private let fetchMyGroupListUseCase: FetchMyGroupListUseCaseInterface
+    private let useCase: FetchDailyWeatherUseCaseInterface
 
-    @Published public var myGroups: [MyGroupEntity] = []
+    @Published public var dailyWeather: [WeatherEntity] = []
 
-    public init(fetchMyGroupListUseCase: FetchMyGroupListUseCaseInterface) {
-        self.fetchMyGroupListUseCase = fetchMyGroupListUseCase
+    public init(useCase: FetchDailyWeatherUseCaseInterface) {
+        self.useCase = useCase
     }
 
     public func executeFetch() {
-        var _ = fetchMyGroupListUseCase.execute { result in
+        var _ = useCase.execute { result in
             switch result {
-            case .success(let myGroups):
-                self.myGroups = myGroups
+            case .success(let dailyWeather):
+                self.dailyWeather = dailyWeather
             case .failure:
-                self.myGroups = []
+                self.dailyWeather = []
             }
         }
     }
@@ -283,61 +306,82 @@ public final class MyGroupListViewModel: ObservableObject, MyGroupListViewModelI
 - ViewModel이 Model(Entity)에 대해 의존성을 갖음(ViewModel -> Model)
 
 ## 3-2. View
-### MyGroupListView.swift
+### DailyWeatherView.swift
 ```swift
 import SwiftUI
 
-public struct MyGroupListView: View {
+public struct DailyWeatherView: View {
 
-    struct MyGroupView: View {
+    @ObservedObject public var viewModel: DailyWeatherViewModel
 
-        let image: String
-        let name: String
-        let date: String
-
-        var body: some View {
-            VStack(alignment: .leading, spacing: 10) {
-                Image(image)
-                    .resizable()
-                    .frame(width: 130, height: 130, alignment: .center)
-                    .cornerRadius(5)
-                VStack(alignment: .leading) {
-                    Text(name)
-                        .font(.headline)
-                        .fontWeight(.regular)
-                    Text(date)
-                        .font(.footnote)
-                }
-            }
-        }
-    }
-
-    @ObservedObject public var viewModel: MyGroupListViewModel
-
-    public init(viewModel: MyGroupListViewModel) {
+    public init(viewModel: DailyWeatherViewModel) {
         self.viewModel = viewModel
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack {
-                Text("내 그룹 목록")
-                    .font(.title)
-                    .fontWeight(.bold)
-                Spacer()
-            }
+        ScrollView() {
+            Text("Daily Weather")
+                .font(.title)
+                .fontWeight(.bold)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(self.viewModel.myGroups) { myGroupEntity in
-                        MyGroupView(image: myGroupEntity.image, name: myGroupEntity.name, date: myGroupEntity.date)
-                    }
+            Spacer(minLength: 20)
+
+            VStack(spacing: 40) {
+                ForEach(self.viewModel.dailyWeather) { weather in
+                    WeatherView(icon: weather.icon, location: weather.location, temperature: weather.temperature, date: weather.date)
                 }
             }
         }
+        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
         .onAppear {
             self.viewModel.executeFetch()
         }
+    }
+
+}
+
+private struct WeatherView: View {
+
+    let icon: String
+    let location: String
+    let temperature: Float
+    let date: Date
+
+    private var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy. MM. dd."
+        return formatter
+    }()
+
+    init(icon: String, location: String, temperature: Float, date: Date) {
+        self.icon = icon
+        self.location = location
+        self.temperature = temperature
+        self.date = date
+    }
+
+    var body: some View {
+        HStack(spacing: 20) {
+
+            Image(icon, bundle: Bundle.module)
+
+            VStack(alignment: .leading) {
+                Text(formatter.string(from: date))
+                    .font(.body)
+                    .foregroundColor(.gray)
+                Text(location)
+                    .font(.title)
+
+                Spacer()
+
+                Text(String(format: " %.1f °C", temperature))
+                    .font(.title)
+                    .fontWeight(.bold)
+            }
+        }
+        .padding(10)
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(25)
     }
 }
 ```
@@ -345,38 +389,36 @@ public struct MyGroupListView: View {
 - View가 ViewModel에 대해 의존성을 갖음(View -> ViewModel)
 
 # 4. Data Layer 구현
+- DB 및 외부 API등을 통해 내부/외부 데이터를 사용하는 Layer
+
 ## 4-1. Repository
-### GroupRepository.swift
+### WeatherRepository.swift
 ```swift
 import Foundation
 import Combine
 import DomainLayer
 
-public protocol GroupRepositoryInterface {
-    func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable?
-}
+public final class WeatherRepository: WeatherRepositoryInterface {
 
-public final class GroupRepository: GroupRepositoryInterface {
+    private let dataSource: WeatherDataSourceInterface
 
-    private let groupDataSource: GroupDataSourceInterface
-
-    public init(groupDataSource: GroupDataSourceInterface) {
-        self.groupDataSource = groupDataSource
+    public init(dataSource: WeatherDataSourceInterface) {
+        self.dataSource = dataSource
     }
 
-    public func fetchMyGroupList(completion: @escaping (Result<[MyGroupEntity], Error>) -> Void) -> Cancellable? {
+    public func fetchDailyWeather(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable? {
 
-        return groupDataSource.fetchMyGroupList { result in
-          switch result {
-          case .success(let myGroupModels):
-              var myGroupEntities = [MyGroupEntity]()
-              for myGroupModel in myGroupModels {
-                  myGroupEntities.append(myGroupModel.dtoMyGroupEntity())
-              }
-              completion(.success(myGroupEntities))
-          case .failure(let error):
-              completion(.failure(error))
-          }
+        return dataSource.fetchDailyWeather { result in
+            switch result {
+            case .success(let dailyWeather):
+                var weatherEntities = [WeatherEntity]()
+                for weather in dailyWeather {
+                    weatherEntities.append(weather.dto())
+                }
+                completion(.success(weatherEntities))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
 }
@@ -387,17 +429,33 @@ public final class GroupRepository: GroupRepositoryInterface {
 - DB 및 외부 API등을 통해 데이터를 가져오는 부분
 - API Framework(Alamofire)등으로 사용할 수 있음
 
-### DataModel & DTO(Data Transfer Object) (GroupDataSource.swift)
+### WeatherDTO.swift (DataModel & DTO(Data Transfer Object))
 ```swift
-public struct GroupModelDTO: Codable {
-    let image: String
+import Foundation
+import DomainLayer
+
+public struct WeatherDTO: Codable {
+    let weather: WeatherDataDTO
+    let main: WeatherMainDTO
     let name: String
-    let date: String
+    let dt: TimeInterval
 
     // DTO: Data Transfer Object
-    public func dtoMyGroupEntity() -> MyGroupEntity {
-        return MyGroupEntity(id: self.name, image: self.image, name: self.name, date: self.date)
+    public func dto() -> WeatherEntity {
+        return WeatherEntity(id: UUID().uuidString, icon: weather.icon, location: name, temperature: Float(main.temp), description: weather.description, date: Date(timeIntervalSince1970: dt))
     }
+}
+
+public struct WeatherDataDTO: Codable {
+    let main: String
+    let description: String
+    let icon: String
+}
+
+public struct WeatherMainDTO: Codable {
+    let temp: Double
+    let temp_min: Double
+    let temp_max: Double
 }
 ```
 - `DataSource`에서 데이터를 파싱하는 모델
@@ -405,79 +463,34 @@ public struct GroupModelDTO: Codable {
 - 데이터 파싱부분을 `DataModelDTO로 만들어서 사용`하기 때문에, DataSource(외부 api, DB등)의 속성 변경에 대해 `DTO부분만 수정`되고, Entity에는 전혀 영향이 없음(Entity는 외부 요인에 의해 변경이 없어야함)
 - DataLayer에서의 변경사항이 다른 계층에 영향을 주지 않음
 
-### GroupLocalDataSource (GroupDataSource.swift)
+### WeatherDataSource.swift (WeatherLocalDataSource)
 ```swift
 import Foundation
 import Combine
 import DomainLayer
 
-public protocol GroupDataSourceInterface {
-    func fetchMyGroupList(completion: @escaping (Result<[GroupModelDTO], Error>) -> Void) -> Cancellable?
+public protocol WeatherDataSourceInterface {
+    func fetchDailyWeather(completion: @escaping (Result<[WeatherDTO], Error>) -> Void) -> Cancellable?
 }
 
-public final class GroupLocalDataSource: GroupDataSourceInterface {
-    static var myGroups = [
-        [
-            "image": "group1",
-            "name": "group 1",
-            "date": "2020.01.01 Mon",
-        ],
-        [
-            "image": "group2",
-            "name": "group 2",
-            "date": "2020.01.02 Mon",
-        ]
-    ]
+public final class WeatherLocalDataSource: WeatherDataSourceInterface {
 
     public init() {}
 
-    public func fetchMyGroupList(completion: @escaping (Result<[GroupModelDTO], Error>) -> Void) -> Cancellable? {
-        return Just(GroupLocalDataSource.myGroups)
+    public func fetchDailyWeather(completion: @escaping (Result<[WeatherDTO], Error>) -> Void) -> Cancellable? {
+        return Just(dailyWeatherLocalData)
             .tryMap { try JSONSerialization.data(withJSONObject: $0, options: .prettyPrinted) }
-            .decode(type: [GroupModelDTO].self, decoder: JSONDecoder())
+            .decode(type: [WeatherDTO].self, decoder: JSONDecoder())
             .replaceError(with: [])
             .eraseToAnyPublisher()
-            .sink { myGroups in
-                completion(.success(myGroups))
-            }
-    }
-}
-
-```
-- `DataSource`의 한 종류로 테스트를 위해 앱 내부의 로컬 값을 사용 하도록 구현
-- Combine의 Just(Publisher)로 구현
-
-### GroupRemoteDataSource (GroupDataSource.swift)
-```swift
-public protocol GroupRemoteDataSourceInterface {
-    init(urlString: String)
-}
-
-public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteDataSourceInterface {
-
-    let urlString: String
-
-    public init(urlString: String) {
-        self.urlString = urlString
-    }
-
-    public func fetchMyGroupList(completion: @escaping (Result<[GroupModelDTO], Error>) -> Void) -> Cancellable? {
-
-        return URLSession
-            .shared
-            .dataTaskPublisher(for: URL(string: urlString)!)
-            .map(\.data)
-            .decode(type: [GroupModelDTO].self, decoder: JSONDecoder())
-            .replaceError(with: [])
-            .eraseToAnyPublisher()
-            .sink { myGroups in
-                completion(.success(myGroups))
+            .sink { dailyWeather in
+                completion(.success(dailyWeather))
             }
     }
 }
 ```
-- 외부 API 호출할 수 있는 `DataSource`
-- URLSession을 Combine구조로 이용할 수 있는 dataTaskPublisher 사용
+- 데이터들을 파싱하는 부분
+- DB 및 API Network Framework 등을 이용하여, 내부/외부 데이터 값을 받아오도록 구현 가능
 
 # 5. App Layer (의존성 주입 컨테이너)
 - 앱의 진입점
@@ -487,53 +500,14 @@ public final class GroupRemoteDataSource: GroupDataSourceInterface, GroupRemoteD
 ![dependencyDiagram](/assets/images/post/cleanArchitecture/dependencyDiagram.png)
 
 ## 5-1. DI(Dependency Injection)
-### MyGroupDI.swift
-- 의존성 주입
+### AppDI.swift
+- 앱 환경에 따른 의존성 주입 부분
+- AppDI는 모든 DI를 사용하는 컨테이너 역할 및 앱 환경설정 구현
 
 ```swift
 import Foundation
 import DataLayer
 import DomainLayer
-import PresentationLayer
-
-public class MyGroupDI {
-
-    private let appEnvironment: AppEnvironment
-
-    public init(appEnvironment: AppEnvironment) {
-        self.appEnvironment = appEnvironment
-    }
-
-    public func myGroupListDependencies() -> MyGroupListViewModel {
-
-        //MARK: Data Layer
-        let groupDS: GroupDataSourceInterface
-
-        switch appEnvironment.phase {
-        case .DEV:
-            groupDS = GroupLocalDataSource()
-        default:
-            groupDS = GroupRemoteDataSource(urlString: "")
-        }
-
-        let groupRepo = GroupRepository(groupDataSource: groupDS)
-
-        //MARK: Domain Layer
-        let fetchMyGroupListUseCase = FetchMyGroupListUseCase(groupRepository: groupRepo)
-
-        //MARK: Presentation
-        let myGroupListViewModel = MyGroupListViewModel(fetchMyGroupListUseCase: fetchMyGroupListUseCase)
-
-        return myGroupListViewModel
-    }
-}
-```
-
-### AppDI.swift
-- AppDI는 모든 DI를 사용하는 컨테이너 역할 및 앱 환경설정 구현
-
-```swift
-import Foundation
 import PresentationLayer
 
 enum PHASE {
@@ -554,13 +528,27 @@ public class AppDI: AppDIInterface {
         self.appEnvironment = appEnvironment
     }
 
-    public func myGroupListDependencies() -> MyGroupListViewModel {
+    public func dailyWeatherDependencies() -> DailyWeatherViewModel {
 
-        let myGroupDI: MyGroupDI = MyGroupDI(appEnvironment: appEnvironment)
+        //MARK: Data Layer
+        let dataSource: WeatherDataSourceInterface
 
-        let myGroupListViewModel = myGroupDI.myGroupListDependencies()
+        switch appEnvironment.phase {
+        case .DEV:
+            dataSource = WeatherLocalDataSource()
+        default:
+            dataSource = WeatherLocalDataSource()
+        }
 
-        return myGroupListViewModel
+        let repository = WeatherRepository(dataSource: dataSource)
+
+        //MARK: Domain Layer
+        let useCase = FetchDailyWeatherUseCase(repository: repository)
+
+        //MARK: Presentation
+        let viewModel = DailyWeatherViewModel(useCase: useCase)
+
+        return viewModel
     }
 }
 ```
@@ -570,10 +558,8 @@ public class AppDI: AppDIInterface {
 - `AppLayer`는 최상위 레이어, `AppLayer`->`PresentationLayer` 하위 레이어들에 대해 의존성을 갖음
 
 ```swift
-import Foundation
-
 public protocol AppDIInterface {
-    func myGroupListDependencies() -> MyGroupListViewModel
+    func dailyWeatherDependencies() -> DailyWeatherViewModel
 }
 ```
 
@@ -589,11 +575,14 @@ import PresentationLayer
 struct CleanArchitectureWithMVVMApp: App {
     var body: some Scene {
         WindowGroup {
-            MyGroupListView(viewModel: AppDI.shared.myGroupListDependencies())
+            DailyWeatherView(viewModel: AppDI.shared.dailyWeatherDependencies())
         }
     }
 }
 ```
+
+# Example App (DailyWeatherApp)
+![DailyWeatherApp](/assets/images/post/cleanArchitecture/example.png)
 
 # SourceCode
 - [https://github.com/tigi44/CleanArchitectureWithMVVM](https://github.com/tigi44/CleanArchitectureWithMVVM){: target="_blank"}
