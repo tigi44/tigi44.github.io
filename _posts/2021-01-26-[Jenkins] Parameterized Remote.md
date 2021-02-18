@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/jenkins-logo.png
+  teaser: /assets/images/jenkins-teaser.png
 ---
 
 젠킨스 빌드 서버 여러대를 remote로 연결하여 한 곳에서 실행가능하도록 설정

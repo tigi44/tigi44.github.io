@@ -9,7 +9,7 @@ tags: [iOS, Objective-c, UIButton]
 classes: wide
 
 header:
-  teaser: /assets/images/ios-logo.png
+  teaser: /assets/images/ios-teaser.png
 ---
 
 ### UIButton

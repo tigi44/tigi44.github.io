@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/nginx-Logo.png
+  teaser: /assets/images/nginx-teaser.png
 ---
 
 ## 1. Install NginX Using yum

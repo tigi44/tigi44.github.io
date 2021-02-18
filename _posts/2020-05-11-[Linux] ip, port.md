@@ -5,11 +5,6 @@ description: "[Linux] IP, Port, Server, Firewall ..."
 last_modified_at: 2020-05-11T14:00:00+09:00
 categories: "ETC"
 tags: [Development, Linux, IP, Port, Firewall, Server]
-
-toc: true
-
-header:
-  teaser: https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Art/remote_notif_simple_2x.png
 ---
 
 ## 열려있는 포트 프로세스 닫기

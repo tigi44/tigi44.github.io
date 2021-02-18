@@ -9,7 +9,7 @@ tags: [NodeJS, Http, Back-end, Front-end, Server]
 classes: wide
 
 header:
-  teaser: /assets/images/nodejs-logo.png
+  teaser: /assets/images/nodejs-teaser.png
 ---
 
 ## NodeJS Http Server Example Github

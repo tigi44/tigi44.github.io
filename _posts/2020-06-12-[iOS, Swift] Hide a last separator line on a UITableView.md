@@ -9,7 +9,7 @@ tags: [Swift, iOS, UITableView]
 classes: wide
 
 header:
-  teaser: /assets/images/swift-logo.png
+  teaser: /assets/images/swift-teaser.png
 ---
 
 ## HideLastSeparator.swift

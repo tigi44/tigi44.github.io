@@ -7,7 +7,7 @@ categories: "Jenkins"
 tags: [Jenkins, XCode, Back-end, Server]
 
 header:
-  teaser: /assets/images/jenkins-logo.png
+  teaser: /assets/images/jenkins-teaser.png
 ---
 
 - 젠킨스 잡 > Build > Execute shell 항목에 추가

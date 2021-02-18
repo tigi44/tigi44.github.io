@@ -9,7 +9,7 @@ tags: [iOS, Objective-c, SSL, Auth, WKWebView, NSURLSession]
 classes: wide
 
 header:
-  teaser: /assets/images/ios-logo.png
+  teaser: /assets/images/ios-teaser.png
 ---
 
 ### NSURLSession

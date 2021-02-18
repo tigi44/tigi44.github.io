@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/jenkins-logo.png
+  teaser: /assets/images/jenkins-teaser.png
 ---
 
 ### 1. Install Pipeline plug-in

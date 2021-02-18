@@ -9,7 +9,7 @@ tags: [iOS, Swift, SwiftUI, Combine, SPM, Clean Architecture, MVVM DesignPattern
 toc_sticky: false
 
 header:
-  teaser: /assets/images/swift-logo.png
+  teaser: /assets/images/swift-teaser.png
 ---
 
 # 개요

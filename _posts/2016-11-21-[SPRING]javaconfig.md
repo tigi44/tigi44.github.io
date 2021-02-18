@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/OG-Spring.png
+  teaser: /assets/images/spring-teaser.png
 ---
 
 ## JAVA CONFIG
