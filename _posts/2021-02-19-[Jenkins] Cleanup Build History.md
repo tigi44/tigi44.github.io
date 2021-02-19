@@ -40,14 +40,15 @@ job.builds.each() { build ->
 job.updateNextBuildNumber(1)
 ```
 
-## 2. Using Shell script
+<!-- ## 2. Using Shell script
 
 ### Remove all builds directory
 ```shell
-$ /your_jenkins_home/jobs> rm -rf */builds/*
+$ cd /your_jenkins_home/jobs
+$ rm -rf */builds/*
 ```
 
 ### Reload Jenkins
 - Manage Jenkins > Reload Configuration from Disk
 
-![reloadmenu](/assets/images/post/jenkins/reloadmenu.png)
+![reloadmenu](/assets/images/post/jenkins/reloadmenu.png) -->
