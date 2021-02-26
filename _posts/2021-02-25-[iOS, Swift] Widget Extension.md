@@ -166,6 +166,9 @@ struct WeatherWidgetEntryView : View {
 >- .systemMedium
 >- .systemLarge
 
+>Widget view size
+>![widgetviewsize](/assets/images/post/ios/widget/widgetviewsize.png)
+
 # Configuration Widget (Editable Widget)
 ![editablewidget](/assets/images/post/ios/widget/editablewidget.png)
 
@@ -231,6 +234,7 @@ struct Provider: IntentTimelineProvider {
 
 - 커스텀하게 만든 Intent에서 parameter값을 동적 리스트로 변경하여 사용하고 싶다면, `Intents Extension` target을 추가하여 사용
 - create a target : intents extension
+![intentsextensiontarget](/assets/images/post/ios/widget/intentsextensiontarget.png)
 ![intentsextension2](/assets/images/post/ios/widget/intentsextension2.png)
 - add the custom intent to supported intents
 - setting target membership of the intentdefinition of the custom intent
