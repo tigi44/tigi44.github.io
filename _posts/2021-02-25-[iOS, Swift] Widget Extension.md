@@ -30,7 +30,7 @@ header:
 
 # Widget
 - Languge: SwiftUI + WidgetKit
-- Data Share: Userdefaults, Keychain....
+- Data Share With App: UserDefaults, Keychain....
 
 ![widget](/assets/images/post/ios/widget/widget.png)
 
@@ -54,7 +54,7 @@ struct WeatherWidget: Widget {
 - kind
 - configurationDisplayName
 - description
-- supportedFamilies
+- supportedFamilies : `.systemSmall`, `.systemMedium`, `.systemLarge`
 
 > WidgetBundle :
 A container used to expose multiple widgets from a single widget extension.
@@ -113,7 +113,7 @@ struct WeatherWidgetProvider: TimelineProvider {
 - placeholder
   - 위젯 데이터 로딩전의 디폴트값으로 노출 가능
 - getSnapshot
-  - 위젯 설정 프리뷰 화면에서 호출 (context.isPreview)
+  - 위젯 설정 프리뷰 화면(위젯 갤러리)에서 호출
 - getTimeline
   - TimelineEntry를 통해 위젯 데이터 셋팅
   - TimelineEntry에 설정된 date 시간에 위젯에 데이터 노출
@@ -235,15 +235,18 @@ struct Provider: IntentTimelineProvider {
 - 커스텀하게 만든 Intent에서 parameter값을 동적 리스트로 변경하여 사용하고 싶다면, `Intents Extension` target을 추가하여 사용
 - create a target : intents extension
 ![intentsextensiontarget](/assets/images/post/ios/widget/intentsextensiontarget.png)
+
+- add the custom intent into supported intents
 ![intentsextension2](/assets/images/post/ios/widget/intentsextension2.png)
-- add the custom intent to supported intents
+
 - setting target membership of the intentdefinition of the custom intent
 ![IntentDefinitionTargetMembership](/assets/images/post/ios/widget/IntentDefinitionTargetMembership.png)
 
-- IntentHandler
-![intentsextension](/assets/images/post/ios/widget/intentsextension.png)
+- setting dynamic options in the intent definition
+![intent_dynamic_options](/assets/images/post/ios/widget/intent_dynamic_options.png)
 
 - IntentHandler에 커스텀 intent type의 IntentHandling 구현, IntentHandling 안에서 동적 파라미터 리스트 입력 가능
+![intentsextension](/assets/images/post/ios/widget/intentsextension.png)
 
 ```swift
 class IntentHandler: INExtension {
