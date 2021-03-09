@@ -274,8 +274,23 @@ extension IntentHandler: ConfigurationIntentHandling {
 }
 ```
 
+# Widget Color
 
-# Widget Depp Link
+![widgetsnapshotaccentcolor](/assets/images/post/ios/widget/widgetsnapshotaccentcolor.png)
+![editablewidgetcolor](/assets/images/post/ios/widget/editablewidgetcolor.png)
+
+- AccentColor
+![widgetaccentcolor](/assets/images/post/ios/widget/widgetaccentcolor.png)
+
+- BackgroundColor
+![widgetbackgroundcolor](/assets/images/post/ios/widget/widgetbackgroundcolor.png)
+
+- Build Settings
+![widgetbuildsetting](/assets/images/post/ios/widget/widgetbuildsetting.png)
+
+>Note: Reboot the simulator to see the change
+
+# Widget Deep Link
 - small 사이즈의 위젯경우, 위젯 전체에 링크가 걸리는 형태만 지원
 - medium, large 사이즈 위젯에서는 `Link()`구현을 통해 각 리스트별 링크 동작 지원
 - 위젯전체 딥링크 : .widgetURL()
@@ -303,6 +318,7 @@ Button(action: {
 # Reference
 - [https://medium.com/swlh/build-your-first-ios-widget-part-3-36ba53033e33](https://medium.com/swlh/build-your-first-ios-widget-part-3-36ba53033e33){:target="_blank"}
 - [https://zeddios.tistory.com/1091](https://zeddios.tistory.com/1091){:target="_blank"}
+- [https://useyourloaf.com/blog/widget-background-and-accent-color/](https://useyourloaf.com/blog/widget-background-and-accent-color/){:target="_blank"}
 
 - [https://developer.apple.com/design/human-interface-guidelines/ios/system-capabilities/widgets/](https://developer.apple.com/design/human-interface-guidelines/ios/system-capabilities/widgets/){:target="_blank"}
 - [https://developer.apple.com/documentation/widgetkit](https://developer.apple.com/documentation/widgetkit){:target="_blank"}
