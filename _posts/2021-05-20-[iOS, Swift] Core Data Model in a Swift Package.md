@@ -1,7 +1,7 @@
 ---
-title: "[iOS, Swift] Core Data Model in a Swift Package"
-excerpt: "Core Data Model programmatically in a Swift Package"
-description: "Core Data Model programmatically in a Swift Package"
+title: "[iOS, Swift] Core Data Model Programmatically in a Swift Package"
+excerpt: "Core Data Model Programmatically in a Swift Package"
+description: "Core Data Model Programmatically in a Swift Package"
 modified: 2021-05-20
 categories: "iOS"
 tags: [iOS, CoreData, Swift]
@@ -10,7 +10,7 @@ header:
   teaser: /assets/images/swift-teaser.png
 ---
 
-# Data Model File (.xcdatamodeld)
+# Data Model File in a XCode Project (.xcdatamodeld)
 
 ## Data Model
 ![datamodel](/assets/images/post/ios/coredata/datamodel.png)
@@ -27,7 +27,7 @@ header:
 </model>
 ```
 
-# Create Core Data Model programmatically
+# Create Core Data Model Programmatically
 
 ## 1. NSManagedObject
 
