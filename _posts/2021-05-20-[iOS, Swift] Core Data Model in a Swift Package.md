@@ -20,9 +20,9 @@ header:
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ExampleEntiry" representedClassName="ExampleEntiry" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="ExampleEntity" representedClassName="ExampleEntity" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
 </model>
 ```
@@ -32,7 +32,7 @@ header:
 ## 1. NSManagedObject
 
 ```swift
-public final class ExampleEntiry: NSManagedObject {
+public final class ExampleEntity: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var date: Date
 }
@@ -44,8 +44,8 @@ public final class ExampleEntiry: NSManagedObject {
 func entityDescription() -> NSEntityDescription {
 
     let entity = NSEntityDescription()
-    entity.name = "ExampleEntiry"
-    entity.managedObjectClassName = NSStringFromClass(ExampleEntiry.self)
+    entity.name = "ExampleEntity"
+    entity.managedObjectClassName = NSStringFromClass(ExampleEntity.self)
 
     // Attributes
     let nameAttr = NSAttributeDescription()
