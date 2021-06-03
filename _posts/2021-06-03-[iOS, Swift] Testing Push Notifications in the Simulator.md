@@ -43,7 +43,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     },
     "badge": 1
   },
-  "Simulator Target Bundle": "com.appbundle.id"
+  "Simulator Target Bundle": "com.app.bundle.id"
 }
 ```
 - `aps` : apns 사용을 위한 payload 값들
@@ -57,15 +57,16 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ## 푸쉬 기능 동작 - 2. CLI (Command Line Interface) 이용
 - 터미널과 같은 `Command Line Interface`를 통해서 동작도 가능
-- CLI를 이용하는 경우, payload file내의 Simulator Target Bundle 항목 삭제가능, CLI명령어에서 이미 {app bubdle id} 값을 이용
+- CLI를 이용하는 경우, payload file내의 Simulator Target Bundle 항목 삭제가능, CLI명령어에서 이미 {app bundle id} 값을 이용
 ```shell
 $ xcrun simctl push {device id} {app bubdle id} {payload file}
-$ xcrun simctl push EEDF7FDD-6C34-4DB6-8A3B-43B71769E2D8 com.appbundle.id test.apns
+$ xcrun simctl push 6AE60A8A-2142-43D7-8F66-D26358BF3E0E com.app.bundle.id test.apns
 ```
 
 - 실행중인 시뮬레이터 디바이스 id 찾는 법
 ```shell
 $ xcrun simctl list devices | grep Booted
+    iPhone 12 Pro Max (6AE60A8A-2142-43D7-8F66-D26358BF3E0E) (Booted)
 ```
 
 # Reference
