@@ -21,12 +21,12 @@ header:
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-  UNUserNotificationCenter.current()
-     .requestAuthorization(options: [.alert, .sound, .badge]) {(granted, error) in
+    UNUserNotificationCenter.current()
+      .requestAuthorization(options: [.alert, .sound, .badge]) {(granted, error) in
 
-  }
+    }
 
-   return true
+    return true
 }
 ```
 
@@ -59,13 +59,13 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 - 터미널과 같은 `Command Line Interface`를 통해서 동작도 가능
 - CLI를 이용하는 경우, payload file내의 Simulator Target Bundle 항목 삭제가능, CLI명령어에서 이미 {app bubdle id} 값을 이용
 ```shell
-xcrun simctl push {device id} {app bubdle id} {payload file}
-xcrun simctl push EEDF7FDD-6C34-4DB6-8A3B-43B71769E2D8 com.appbundle.id test.apns
+$ xcrun simctl push {device id} {app bubdle id} {payload file}
+$ xcrun simctl push EEDF7FDD-6C34-4DB6-8A3B-43B71769E2D8 com.appbundle.id test.apns
 ```
 
 - 실행중인 시뮬레이터 디바이스 id 찾는 법
 ```shell
-xcrun simctl list devices | grep Booted
+$ xcrun simctl list devices | grep Booted
 ```
 
 # Reference
