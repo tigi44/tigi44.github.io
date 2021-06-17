@@ -94,7 +94,7 @@ analytics:
 # Site Author
 author:
   name             : "tigi44"
-  avatar           : "/assets/images/profile-tigi44.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profile_memoji_macbook.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "iOS App & WEB App <br> Developer"
   location         : "Pangyo, KR"
   email            : #"onlytg@naver.com"
