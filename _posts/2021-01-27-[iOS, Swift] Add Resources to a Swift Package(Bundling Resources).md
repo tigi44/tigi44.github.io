@@ -9,7 +9,7 @@ tags: [iOS, Swift, SwiftUI, SPM, Resources, Bundle]
 toc: true
 
 header:
-  teaser: /assets/images/swift-teaser.png
+  teaser: /assets/images/teaser/swift-teaser.png
 ---
 
 Swift Package Manager(SPM)에 리소스 포함이 가능하다.

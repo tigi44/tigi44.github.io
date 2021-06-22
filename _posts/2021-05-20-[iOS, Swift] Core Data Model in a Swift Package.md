@@ -7,7 +7,7 @@ categories: "iOS"
 tags: [iOS, CoreData, Swift]
 
 header:
-  teaser: /assets/images/swift-teaser.png
+  teaser: /assets/images/teaser/swift-teaser.png
 ---
 
 # Data Model File in a XCode Project (.xcdatamodeld)

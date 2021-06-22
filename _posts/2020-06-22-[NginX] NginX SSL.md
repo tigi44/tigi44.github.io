@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/nginx-teaser.png
+  teaser: /assets/images/teaser/nginx-teaser.png
 ---
 
 # NginX Web Server

@@ -7,7 +7,7 @@ categories: "iOS"
 tags: [iOS, Widget, Swift]
 
 header:
-  teaser: /assets/images/swift-teaser.png
+  teaser: /assets/images/teaser/swift-teaser.png
 ---
 
 # Widget Extension

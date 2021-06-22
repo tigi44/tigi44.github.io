@@ -9,7 +9,7 @@ tags: [iOS, Objective-c, Effective Objective-c]
 toc_sticky: false
 
 header:
-  teaser: /assets/images/ios-teaser.png
+  teaser: /assets/images/teaser/ios-teaser.png
 ---
 
 # 5. Memory Management

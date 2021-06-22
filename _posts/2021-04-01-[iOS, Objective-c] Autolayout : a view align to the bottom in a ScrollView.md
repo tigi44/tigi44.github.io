@@ -7,7 +7,7 @@ categories: "iOS"
 tags: [iOS, Autolayout, Objective-c]
 
 header:
-  teaser: /assets/images/ios-teaser.png
+  teaser: /assets/images/teaser/ios-teaser.png
 ---
 
 # a View align to the bottom in a ScrollView

@@ -9,7 +9,7 @@ tags: [iOS, Objective-c, WKWebView, Keyboard, iOS Bug]
 classes: wide
 
 header:
-  teaser: /assets/images/ios-teaser.png
+  teaser: /assets/images/teaser/ios-teaser.png
 ---
 
 ## WKWebView Keyboard Scroll issue

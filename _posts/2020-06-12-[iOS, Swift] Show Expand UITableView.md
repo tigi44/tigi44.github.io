@@ -9,7 +9,7 @@ tags: [Swift, iOS, UITableView]
 classes: wide
 
 header:
-  teaser: /assets/images/swift-teaser.png
+  teaser: /assets/images/teaser/swift-teaser.png
 ---
 
 ## ExpandedTableView.swift

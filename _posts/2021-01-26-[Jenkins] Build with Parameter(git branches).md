@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/jenkins-teaser.png
+  teaser: /assets/images/teaser/jenkins-teaser.png
 ---
 
 젠킨스 잡 실행시, git 브랜치들을 파라미터로 선택하여 실행하도록 설정

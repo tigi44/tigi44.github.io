@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 
 header:
-  teaser: /assets/images/spring-teaser.png
+  teaser: /assets/images/teaser/spring-teaser.png
 ---
 
 ## SECURITY CONFIG

@@ -7,7 +7,7 @@ categories: "Jenkins"
 tags: [Jenkins, Cleanup Build]
 
 header:
-  teaser: /assets/images/jenkins-teaser.png
+  teaser: /assets/images/teaser/jenkins-teaser.png
 ---
 
 ## 1. Using Jenkins Script Console

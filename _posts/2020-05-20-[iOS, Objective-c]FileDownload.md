@@ -9,7 +9,7 @@ tags: [iOS, Objective-c, File Download, HTTP Response attachment]
 classes: wide
 
 header:
-  teaser: /assets/images/ios-teaser.png
+  teaser: /assets/images/teaser/ios-teaser.png
 ---
 
 ## File Download

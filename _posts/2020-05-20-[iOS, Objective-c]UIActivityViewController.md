@@ -9,7 +9,7 @@ tags: [iOS, Objective-c, UIActivityViewController]
 classes: wide
 
 header:
-  teaser: /assets/images/ios-teaser.png
+  teaser: /assets/images/teaser/ios-teaser.png
 ---
 
 ## UIActivityViewController
