@@ -4,7 +4,7 @@ excerpt: "[WWDC21] Xcode Cloud"
 description: "[WWDC21] Xcode Cloud"
 modified: 2021-06-22
 categories: "WWDC21"
-tags: [WWDC21, Xcode, Xcode Cloud]
+tags: [WWDC21, Xcode, Xcode13, Xcode Cloud]
 
 header:
   teaser: /assets/images/teaser/wwdc21-teaser.jpg
