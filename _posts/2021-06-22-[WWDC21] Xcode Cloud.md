@@ -68,6 +68,7 @@ header:
 - Deploying with TestFlight
   - Actions의 Archive에서 TestFlight 배포준비 설정을 해야함
   - Internal(개발 단계) 과 External(배포전 단계) TestFlight 배포 존재
+  - 앱 배포 인증서는 cloud signing을 통해 자동 적용됨([https://developer.apple.com/wwdc21/10267](https://developer.apple.com/wwdc21/10204){:target="_blank"})
 
 ![postactiontestflight](/assets/images/post/wwdc21/xcodecloud/postactionstestflight.png)
 
