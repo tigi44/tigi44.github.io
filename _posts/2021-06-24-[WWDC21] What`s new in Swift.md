@@ -1,10 +1,10 @@
 ---
-title: "[WWDC21] What`s new in swift (Swift 5.5)"
-excerpt: "[WWDC21] What`s new in swift (Swift 5.5)"
-description: "[WWDC21] What`s new in swift (Swift 5.5)"
+title: "[WWDC21] What`s new in Swift (Swift 5.5)"
+excerpt: "[WWDC21] What`s new in Swift"
+description: "[WWDC21] What`s new in Swift"
 modified: 2021-06-24
 categories: "WWDC21"
-tags: [WWDC21, Swift, Swift5.5]
+tags: [WWDC21, Swift, Swift 5.5]
 
 header:
   teaser: /assets/images/teaser/wwdc21-teaser.jpg
