@@ -16,32 +16,31 @@ header:
 
 ### 오류 케이스
 
-기존 today extension이 1개 이상 설정되어 있는 상태<br>
-이 상태에서 new widget이 있는 버전의 앱으로 업데이트 실행<br>
-기존 설정된 today extension이 모두 제거(목록에서도 삭제)되고, 새로운 widget이 자동으로 설정됨<br>
-앱 삭제후 재설치 or 디바이스 리부팅시, 목록에서 제거된 today extension이 다시 목록에 추가<br>
+- 기존 today extension이 1개 이상 설정되어 있는 상태
+- 이 상태에서 new widget이 추가된 버전의 앱으로 업데이트 실행
+- 기존 설정된 today extension이 모두 제거(목록에서도 삭제)되고, 새로운 widget이 자동으로 설정됨
+- 앱 삭제후 재설치 or 디바이스 리부팅시, 목록에서 제거된 today extension이 다시 목록에 추가
 
 ### 정상 케이스
 
-기존 today extension이 설정되어 있지 않은 상태<br>
-new widget이 있는 버전의 앱으로 업데이트 실행<br>
-today extension이 목록에서 제거되지도 않고, 새로운 widget이 자동 설정되지도 않음
+- 기존 today extension이 설정되어 있지 않은 상태
+- new widget이 추가된 버전의 앱으로 업데이트 실행
+- today extension이 목록에서 제거되지도 않고, 새로운 widget이 자동 설정되지도 않음
 
 
 ## iOS14.5
-iOS 14.5(?)부터 기존 위젯(TodayExtenstion)이 삭제되지 않고, unable to load 상태(?)로 전환됨<br>
-이전과 마찬가지로 디바이스 리부팅 or 앱 재설치시 문제 해결
+- iOS 14.5(?)부터 기존 위젯(TodayExtenstion)이 삭제되지 않고, unable to load 상태(?)로 전환됨
+- 이전과 마찬가지로 디바이스 리부팅 or 앱 재설치시 문제 해결
 
 
 
 ## Reference Forums
 ### Apple Developer Forums
-- [https://developer.apple.com/forums/thread/650350?answerId=614450022#614450022](https://developer.apple.com/forums/thread/650350?answerId=614450022#614450022){:target="_blank"}
+- [https://developer.apple.com/forums/thread/650350?answerId=614450022](https://developer.apple.com/forums/thread/650350?answerId=614450022){:target="_blank"}
 > Today Extensions continue to be available, however, they are deprecated. When your app is submitted for the newer SDK the legacy today widget extension will be removed.
 
 # Apple Feedback & Developer Technical Support(DTS)
 ## Feedback
-- FB9055041 (The existing today extension widget is automatically deleted when it is updated with a version of the app that contains the new widget)
 
 ### Q : (2021/3/26)
 We've developed and distributed widgets using WidgetKit.
