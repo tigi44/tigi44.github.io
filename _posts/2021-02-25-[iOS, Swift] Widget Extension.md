@@ -230,7 +230,9 @@ struct Provider: IntentTimelineProvider {
 ```
 
 ## Intents Extension (Dynamic parameter options)
+
 ![parameterlist](/assets/images/post/ios/widget/parameterlist.png)
+![parameterlistWithSections](/assets/images/post/ios/widget/parameterlistWithSections.png)
 
 - 커스텀하게 만든 Intent에서 parameter값을 동적 리스트로 변경하여 사용하고 싶다면, `Intents Extension` target을 추가하여 사용
 - create a target : intents extension
@@ -270,6 +272,13 @@ extension IntentHandler: ConfigurationIntentHandling {
         items.append("forth string")
 
         completion(INObjectCollection(items: items), nil)
+
+        // Paramete List With Sections
+        /*
+        completion(INObjectCollection(sections: [INObjectSection(title: "first section", items: ["first string", "second string"]),
+         INObjectSection(title: "second section", items: ["third string", "forth string"])]),
+         nil)
+         */
     }
 }
 ```
