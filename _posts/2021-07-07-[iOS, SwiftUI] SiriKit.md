@@ -1,10 +1,10 @@
 ---
-title: "[iOS, SwiftUI] SiriKit"
-excerpt: "SiriKit : Intents, IntentsUI, NSUserActivity"
-description: "SiriKit : Intents, IntentsUI, NSUserActivity"
+title: "[iOS, SwiftUI] SiriKit (Shortcuts)"
+excerpt: "SiriKit (Shortcuts) : Intents, IntentsUI, NSUserActivity"
+description: "SiriKit (Shortcuts) : Intents, IntentsUI, NSUserActivity"
 modified: 2021-07-07
 categories: "iOS"
-tags: [iOS, SwiftUI, SiriKit, Intents, IntentsUI, NSUserActivity]
+tags: [iOS, SwiftUI, SiriKit, Shortcuts, Intents, IntentsUI, NSUserActivity]
 
 header:
   teaser: /assets/images/teaser/swiftui-teaser.png
@@ -19,14 +19,16 @@ import Intents
 import IntentsUI
 ```
 
-# Using NSUserActivity
+# Shortcuts
+
+## NSUserActivity
 
 - `NSUserActivity`를 이용하여 쉽게 단축어(Shortcuts)를 추가하고, 시리를 통하여 앱을 실행
 
 ![addsiri](/assets/images/post/sirikit/addsiri.png)
 ![shortcuts](/assets/images/post/sirikit/shortcuts.png)
 
-## INVoiceShortcutCenter
+### Set Shortcut to Siri Suggestions
 ```swift
 import Intents
 
@@ -124,7 +126,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ![shortcutsgallery](/assets/images/post/sirikit/shortcutsgallery.png)
 
-## onContinueUserActivity
+### Continue UserActivity
 - 단축어(Shortcuts)로 실행된 내용을 SwiftUI에서 동작시키기 위해서는 View내의 `onContinueUserActivity`를 이용하여 쉽게 적용 가능
 - Shortcut type에 따라 그에 맞는 onContinueUserActivity 설정
 
@@ -298,7 +300,61 @@ struct BlueView: View {
 }
 ```
 
+## Intents
+
+
+![testshortcuts](/assets/images/post/sirikit/testshortcuts.png)
+![intentview](/assets/images/post/sirikit/intentview.png)
+![shortcutsapp](/assets/images/post/sirikit/shortcutsapp.png)
+
+- Intents를 사용할 경우, Shortcuts 앱내의 `Add Action` 메뉴에서 사용이 가능해짐
+- Intents를 통해 추가 파라미터등을 입력받을 수 있는 등, 다양한 방식으로 Shortcut 활용이 가능 
+
+### Create a SiriKit Intent Definition File
+
+![siriintentdefinition](/assets/images/post/sirikit/siriintentdefinition.png)
+
+- Add `ShowIntentViewIntent`
+![showintentviewinent](/assets/images/post/sirikit/showintentviewinent.png)
+
+- Add Text Parameter into the intent
+![intentparam](/assets/images/post/sirikit/intentparam.png)
+
+- Set a Parameter into Shortcuts App and Siri Suggestions
+![intentshortcut](/assets/images/post/sirikit/intentshortcut.png)
+
+### Continue UserActivity
+- UserActivityType은 Intent Definition 생성시 info.plist 파일에 자동 생성
+- `ShowIntentViewIntent`에서 text 파라미터를 받을 수 있기때문에, userActivity에서 text 파라미터를 가져와 사용
+
+```swift
+struct ContentView: View {
+
+    ...
+
+    var body: some View {
+
+        ...
+
+        .onContinueUserActivity("ShowIntentViewIntent", perform: { userActivity in
+
+            if let intent = userActivity.interaction?.intent
+                as? ShowIntentViewIntent {
+                intentViewText = intent.text
+            }
+
+            showIntentView.toggle()
+        })
+    }
+}
+```
+
+
+# Source Code
+- [https://github.com/tigi44/SiriKitExample](https://github.com/tigi44/SiriKitExample){:target="_blank"}
+
 # Reference
 - [https://zeddios.tistory.com/1289](https://zeddios.tistory.com/1289){:target="_blank"}
 - [https://swiftui-lab.com/nsuseractivity-with-swiftui/](https://swiftui-lab.com/nsuseractivity-with-swiftui/){:target="_blank"}
 - [https://blog.devgenius.io/how-to-add-siri-shortcuts-in-your-app-in-swift-7afb61934c4e](https://blog.devgenius.io/how-to-add-siri-shortcuts-in-your-app-in-swift-7afb61934c4e){:target="_blank"}
+- [https://toolboxpro.app/blog/adding-shortcuts-to-an-app-1](https://toolboxpro.app/blog/adding-shortcuts-to-an-app-1){:target="_blank"}
