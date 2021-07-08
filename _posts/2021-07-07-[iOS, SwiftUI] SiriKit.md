@@ -2,7 +2,7 @@
 title: "[iOS, SwiftUI] SiriKit (Shortcuts)"
 excerpt: "SiriKit (Shortcuts) : Intents, IntentsUI, NSUserActivity"
 description: "SiriKit (Shortcuts) : Intents, IntentsUI, NSUserActivity"
-modified: 2021-07-07
+modified: 2021-07-08
 categories: "iOS"
 tags: [iOS, SwiftUI, SiriKit, Shortcuts, Intents, IntentsUI, NSUserActivity]
 
@@ -308,7 +308,7 @@ struct BlueView: View {
 ![shortcutsapp](/assets/images/post/sirikit/shortcutsapp.png)
 
 - Intents를 사용할 경우, Shortcuts 앱내의 `Add Action` 메뉴에서 사용이 가능해짐
-- Intents를 통해 추가 파라미터등을 입력받을 수 있는 등, 다양한 방식으로 Shortcut 활용이 가능 
+- Intents를 통해 추가 파라미터등을 입력받을 수 있는 등, 다양한 방식으로 Shortcut 활용이 가능
 
 ### Create a SiriKit Intent Definition File
 
