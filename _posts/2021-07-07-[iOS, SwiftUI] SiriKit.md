@@ -322,6 +322,8 @@ struct BlueView: View {
 
 - Add `ShowIntentViewIntent`
 ![showintentviewinent](/assets/images/post/sirikit/showintentviewinent.png)
+- Custom Intent (Category)
+[https://developer.apple.com/design/human-interface-guidelines/siri/overview/custom-intents/](https://developer.apple.com/design/human-interface-guidelines/siri/overview/custom-intents/){:target="_blank"}
 
 - Add Text Parameter into the intent
 ![intentparam](/assets/images/post/sirikit/intentparam.png)
