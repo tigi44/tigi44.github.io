@@ -19,6 +19,12 @@ import Intents
 import IntentsUI
 ```
 
+## SiriKit Capability
+
+- add SiriKit Capability into the project setting for using siri
+
+![sirikitCapability](/assets/images/post/sirikit/sirikitcapability.png)
+
 # Shortcuts
 
 ## NSUserActivity
