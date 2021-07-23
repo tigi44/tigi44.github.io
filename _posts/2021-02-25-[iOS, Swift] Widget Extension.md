@@ -1,16 +1,16 @@
 ---
-title: "[iOS, Swift] Widget Extension"
-excerpt: "Make a iOS Widget"
-description: "Make a iOS Widget"
+title: "[iOS, Swift] Widget Extension (WidgetKit)"
+excerpt: "Make a iOS Widget using WidgetKit"
+description: "Make a iOS Widget using WidgetKit"
 modified: 2021-02-25
 categories: "iOS"
-tags: [iOS, Widget, Swift]
+tags: [iOS, Swift, SwiftUI, Widget, WidgetKit]
 
 header:
   teaser: /assets/images/teaser/swift-teaser.png
 ---
 
-# Widget Extension
+# Widget Extension (WidgetKit)
 - iOS 14 Widget
 
 ![widgets](/assets/images/post/ios/widget/widgets.png)
