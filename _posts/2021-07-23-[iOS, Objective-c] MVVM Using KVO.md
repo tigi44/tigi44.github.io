@@ -6,6 +6,7 @@ modified: 2021-07-23
 categories: "iOS"
 tags: [iOS, Objective-c, MVVM, KVO, Combine, Reactive]
 
+classes: wide
 toc: false
 
 header:

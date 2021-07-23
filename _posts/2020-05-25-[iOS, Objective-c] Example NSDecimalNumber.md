@@ -7,6 +7,7 @@ categories: "iOS"
 tags: [iOS, Objective-c, NSDecimalNumber, CGFloat, double, NSNumber]
 
 classes: wide
+toc: false
 
 header:
   teaser: /assets/images/teaser/ios-teaser.png

@@ -6,6 +6,7 @@ modified: 2021-07-23
 categories: "iOS"
 tags: [iOS, Swift, Coordinator]
 
+classes: wide
 toc: false
 
 header:
