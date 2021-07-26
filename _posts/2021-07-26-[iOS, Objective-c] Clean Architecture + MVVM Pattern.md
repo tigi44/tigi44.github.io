@@ -1,7 +1,7 @@
 ---
 title: "[iOS, Objective-c] Clean Architecture + MVVM Pattern"
-excerpt: "Clean Architecture + MVVM Pattern"
-description: "Clean Architecture + MVVM Pattern"
+excerpt: "Create a Example for Clean Architecture with MVVM pattern in Objective-c"
+description: "Create a Example for Clean Architecture with MVVM pattern in Objective-c"
 modified: 2021-07-26
 categories: "iOS"
 tags: [iOS, Objective-c, MVVM, Clean Architecture, Reactive]
