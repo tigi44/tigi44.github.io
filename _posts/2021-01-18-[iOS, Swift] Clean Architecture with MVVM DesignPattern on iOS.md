@@ -232,7 +232,7 @@ import Foundation
 import Combine
 
 public protocol FetchDailyWeatherUseCaseInterface {
-    func execute(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable?
+    func execute() -> AnyPublisher<[WeatherEntity], Error>
 }
 
 public final class FetchDailyWeatherUseCase: FetchDailyWeatherUseCaseInterface {
@@ -243,15 +243,13 @@ public final class FetchDailyWeatherUseCase: FetchDailyWeatherUseCaseInterface {
         self.repository = repository
     }
 
-    public func execute(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable? {
-        return repository.fetchDailyWeather { result in
-            completion(result)
-        }
+    public func execute() -> AnyPublisher<[WeatherEntity], Error> {
+        return repository.fetchDailyWeather()
     }
 }
 
 public protocol WeatherRepositoryInterface {
-    func fetchDailyWeather(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable?
+    func fetchDailyWeather() -> AnyPublisher<[WeatherEntity], Error>
 }
 ```
 - `Business Logic`을 처리하는 부분
@@ -283,6 +281,7 @@ public protocol DailyWeatherViewModelOutput {
 public final class DailyWeatherViewModel: ObservableObject, DailyWeatherViewModelInput, DailyWeatherViewModelOutput {
 
     private let useCase: FetchDailyWeatherUseCaseInterface
+    private var bag: Set<AnyCancellable> = Set<AnyCancellable>()
 
     @Published public var dailyWeather: [WeatherEntity] = []
 
@@ -291,14 +290,19 @@ public final class DailyWeatherViewModel: ObservableObject, DailyWeatherViewMode
     }
 
     public func executeFetch() {
-        var _ = useCase.execute { result in
-            switch result {
-            case .success(let dailyWeather):
-                self.dailyWeather = dailyWeather
-            case .failure:
-                self.dailyWeather = []
+
+        useCase.execute()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(_):
+                    self.dailyWeather = []
+                }
+            } receiveValue: { weatherList in
+                self.dailyWeather = weatherList
             }
-        }
+            .store(in: &bag)
     }
 }
 ```
@@ -406,20 +410,19 @@ public final class WeatherRepository: WeatherRepositoryInterface {
         self.dataSource = dataSource
     }
 
-    public func fetchDailyWeather(completion: @escaping (Result<[WeatherEntity], Error>) -> Void) -> Cancellable? {
+    public func fetchDailyWeather() -> AnyPublisher<[WeatherEntity], Error> {
+        return dataSource.fetchDailyWeather()
+            .map({ weatherDTOList in
 
-        return dataSource.fetchDailyWeather { result in
-            switch result {
-            case .success(let dailyWeather):
                 var weatherEntities = [WeatherEntity]()
-                for weather in dailyWeather {
+
+                for weather in weatherDTOList {
                     weatherEntities.append(weather.dto())
                 }
-                completion(.success(weatherEntities))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+
+                return weatherEntities
+            })
+            .eraseToAnyPublisher()
     }
 }
 ```
@@ -470,22 +473,18 @@ import Combine
 import DomainLayer
 
 public protocol WeatherDataSourceInterface {
-    func fetchDailyWeather(completion: @escaping (Result<[WeatherDTO], Error>) -> Void) -> Cancellable?
+    func fetchDailyWeather() -> AnyPublisher<[WeatherDTO], Error>
 }
 
 public final class WeatherLocalDataSource: WeatherDataSourceInterface {
 
     public init() {}
 
-    public func fetchDailyWeather(completion: @escaping (Result<[WeatherDTO], Error>) -> Void) -> Cancellable? {
+    public func fetchDailyWeather() -> AnyPublisher<[WeatherDTO], Error> {
         return Just(dailyWeatherLocalData)
             .tryMap { try JSONSerialization.data(withJSONObject: $0, options: .prettyPrinted) }
             .decode(type: [WeatherDTO].self, decoder: JSONDecoder())
-            .replaceError(with: [])
             .eraseToAnyPublisher()
-            .sink { dailyWeather in
-                completion(.success(dailyWeather))
-            }
     }
 }
 ```
