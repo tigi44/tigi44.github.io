@@ -37,7 +37,7 @@ def processOneMemoryRegion(process, memoryRegionInfo):
         memoryData = process.ReadMemory(begAddressOfMemoryRegion, regionSize, error)
         if error.Success():
             #do something with memoryData (bytearray) eg. save it to file
-            file = open("/absolute path/sample.txt", "ab")
+            file = open("/absolute path/sample.bin", "ab")
             file.write(memoryData)
             file.close()
             pass
@@ -60,7 +60,7 @@ Python Interactive Interpreter. To exit, type 'quit()', 'exit()'.
 
 # Use hexdump Command
 ```shell
-$ hexdump -C sample.txt
+$ hexdump -C sample.bin
 
 00000c00  48 c7 04 32 00 00 00 00  31 c0 83 c9 ff f0 0f b1  |H..2....1.......|
 00000c10  4f 10 74 1d f3 90 31 c0  f0 0f b1 4f 10 74 12 f3  |O.t...1....O.t..|
