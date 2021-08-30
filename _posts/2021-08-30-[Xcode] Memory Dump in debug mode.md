@@ -58,13 +58,19 @@ Python Interactive Interpreter. To exit, type 'quit()', 'exit()'.
 >>> processAllMemoryRegions ()
 ```
 
-# Use hexdump Command
+# Hex view
+
+## hexdump in linux
 ```shell
 $ hexdump -C sample.bin
 
 00000c00  48 c7 04 32 00 00 00 00  31 c0 83 c9 ff f0 0f b1  |H..2....1.......|
 00000c10  4f 10 74 1d f3 90 31 c0  f0 0f b1 4f 10 74 12 f3  |O.t...1....O.t..|
 ```
+
+## Hex Fiend
+- [https://hexfiend.com](https://hexfiend.com){:target="_blank"}
+![image](https://hexfiend.com/screenshots/screenshot1.png)
 
 # Reference
 - [https://www.python2.net/questions-668418.htm](https://www.python2.net/questions-668418.htm){:target="_blank"}
