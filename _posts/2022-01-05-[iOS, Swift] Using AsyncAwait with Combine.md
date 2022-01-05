@@ -1,7 +1,7 @@
 ---
-title: "[iOS, Swift] Using Asyn / Await with Combine"
-excerpt: "Using Asyn / Await with Combine"
-description: "Using Asyn / Await with Combine"
+title: "[iOS, Swift] Using Async / Await with Combine"
+excerpt: "Using Async / Await with Combine"
+description: "Using Async / Await with Combine"
 modified: 2022-01-05
 categories: "iOS"
 tags: [iOS, Swift, SwiftUI, Async/Await, Combine]
