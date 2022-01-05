@@ -2,7 +2,7 @@
 title: "[iOS, SwiftUI] Use a UISheetPresentationController on SwiftUI"
 excerpt: "Use a UISheetPresentationController on SwiftUI"
 description: "Use a UISheetPresentationController on SwiftUI"
-modified: 2022-01-05
+modified: 2022-01-04
 categories: "iOS"
 tags: [iOS, SwiftUI, UISheetPresentationController, UIViewControllerRepresentable]
 
