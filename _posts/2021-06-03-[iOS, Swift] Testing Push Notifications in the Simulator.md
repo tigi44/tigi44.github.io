@@ -53,7 +53,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ## 푸쉬 기능 동작 - 1. 파일 드래그
 - 앞서 준비한 `*.apns` 파일을 시뮬레이터에 드래그하여, 푸쉬 기능을 동작 시킴
-![ex](https://jusung.github.io/images/2020/remotepush%20test%20drag.gif)
+<video width="480" autoplay loop>
+  <source src="/assets/images/post/ios/push_notification_simulator.mov" type="video/mp4">
+</video>
 
 ## 푸쉬 기능 동작 - 2. CLI (Command Line Interface) 이용
 - 터미널과 같은 `Command Line Interface`를 통해서 동작도 가능
