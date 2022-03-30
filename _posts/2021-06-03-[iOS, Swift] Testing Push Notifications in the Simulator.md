@@ -47,7 +47,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 - `aps` : apns 사용을 위한 payload 값들
-    - 사용 가능한 payload 키값  : https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification
+    - 사용 가능한 payload 키값  : [Generating a Remote Notification](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification)
 -  `Simulator Target Bundle` : 앱 번들 id
     -  원격 APNs를 사용할 경우는 필요 없는 항목이지만, payload file을 이용해 로컬 시뮬레이터에서 사용시 앱을 구분하기위해 필요한 값
 
