@@ -53,7 +53,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ## 푸쉬 기능 동작 - 1. 파일 드래그
 - 앞서 준비한 `*.apns` 파일을 시뮬레이터에 드래그하여, 푸쉬 기능을 동작 시킴
-<video width="480" autoplay loop>
+<video width="320" autoplay loop>
   <source src="/assets/images/post/ios/push_notification_simulator.mov" type="video/mp4">
 </video>
 
