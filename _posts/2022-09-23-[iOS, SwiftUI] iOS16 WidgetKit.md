@@ -1,5 +1,5 @@
 ---
-title: "[iOS, Swift] iOS16 WidgetKit (iPhone LockScreen & Watch)"
+title: "[iOS, SwiftUI] iOS16 WidgetKit (iPhone LockScreen & Watch)"
 excerpt: "iOS16 WidgetKit - LockScreen Widget & Watch Complications"
 description: "iOS16 WidgetKit - LockScreen Widget & Watch Complications"
 modified: 2022-09-23
@@ -7,7 +7,7 @@ categories: "iOS"
 tags: [iOS, Swift, SwiftUI, Widget, WidgetKit]
 
 header:
-  teaser: /assets/images/teaser/swift-teaser.png
+  teaser: /assets/images/teaser/swiftui-teaser.png
 ---
 
 # iOS16 WidgetKit
