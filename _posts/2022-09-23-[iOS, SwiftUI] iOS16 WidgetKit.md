@@ -91,9 +91,9 @@ ZStack {
 ```
 
 ### 4. Make Sure Text Fits Available Space
-- ViewThatFits : accessoryInline과 같은 위젯에서, 해당 공간 영역보다 view가 커질 경우, 공간에 맞도록 크기가 맞는 view를 선택하여 보여줌 
+- ViewThatFits : accessoryInline과 같은 위젯에서, 해당 공간 영역보다 view가 커질 경우, 공간에 맞도록 크기가 맞는 view를 선택하여 보여줌
 
-```swift 
+```swift
 ViewThatFits {
     Label(String(format: " %.1f °C + LongTextLongTextLongText", entry.temperature),
           systemImage: entry.icon)
@@ -144,7 +144,7 @@ var body: some View {
 ## Watch Widget Extension
 
 - iOS16 Watch WidgetKit Previews
-![watch_widget_example](/assets/images/post/ios/widget/iOS16/watch_widget_example.png)
+![watch_widget_previews](/assets/images/post/ios/widget/iOS16/watch_widget_previews.png)
 
 ### 0. Add a Watch Widget Extension
 - Watch App용 Target 추가
@@ -211,16 +211,16 @@ struct WeatherWidgetEntryView : View {
 ```swift
 struct WeahterAccessoryCornerView: View {
         var entry: WeatherWidgetProvider.Entry
-        
+
         var body: some View {
             ZStack {
                 AccessoryWidgetBackground()
-                
+
                 VStack {
                     Image(systemName: entry.icon)
                         .symbolRenderingMode(.multicolor)
                         .widgetAccentable()
-                    
+
                     Text(String(format: " %.1f °C", entry.temperature))
                         .font(.caption2)
                 }
@@ -244,7 +244,7 @@ struct WeahterAccessoryCornerView: View {
 ```
 
 - showsWidgetLabel 환경변수값을 통해, 해당 위젯에서 widgetLabel이 보일 수 있는지 확인할 수 있음  
-```swift 
+```swift
 @Environment(\.showsWidgetLabel) var showsWidgetLabel
 ```
 
