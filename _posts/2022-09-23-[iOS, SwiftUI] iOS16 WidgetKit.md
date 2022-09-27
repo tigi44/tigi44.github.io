@@ -90,7 +90,26 @@ ZStack {
 }
 ```
 
-### 4. Support Applicable Rendering Modes
+### 4. Make Sure Text Fits Available Space
+- ViewThatFits : accessoryInline과 같은 위젯에서, 해당 공간 영역보다 view가 커질 경우, 공간에 맞도록 크기가 맞는 view를 선택하여 보여줌 
+
+```swift 
+ViewThatFits {
+    Label(String(format: " %.1f °C + LongTextLongTextLongText", entry.temperature),
+          systemImage: entry.icon)
+    .symbolRenderingMode(.multicolor)
+
+    Label(String(format: " %.1f °C + LongText", entry.temperature),
+          systemImage: entry.icon)
+    .symbolRenderingMode(.multicolor)
+
+    Label(String(format: " %.1f °C", entry.temperature),
+          systemImage: entry.icon)
+    .symbolRenderingMode(.multicolor)
+}
+```
+
+### 5. Support Applicable Rendering Modes
 - vibrant : LockScreen에서의 위젯을 단색으로 불포화시키고, 배경화면에 맞게 조절
 - fullColor : WatchOS에서 사용되며, 그라디언트와 풀컬러 이미지, 텍스트 및 게이지 사용
 - accented : WatchOS는 위젯의 뷰 계층을 악센트 그룹과 기본 그룹으로 놔눠서 단색을 적용, .widgetAccentable()를 이용하여 악센트 그룹으로 지정 가능
@@ -178,12 +197,55 @@ struct WeatherWidgetEntryView : View {
           case .accessoryInline:
               WeahterAccessoryInlineView(entry: entry)
           case .accessoryCorner:
-              WeahterAccessoryCircularView(entry: entry)
+              WeahterAccessoryCornerView(entry: entry)
 
           ...
         }
     }
 }
+```
+
+#### accessoryCorner
+- widgetLabel : watchOS에서 accessoryCorner의 모서리 곡선 부분은, widgetLabel을 이용하여 text, gauge, progress view등으로 보여줄 수 있음  
+
+```swift
+struct WeahterAccessoryCornerView: View {
+        var entry: WeatherWidgetProvider.Entry
+        
+        var body: some View {
+            ZStack {
+                AccessoryWidgetBackground()
+                
+                VStack {
+                    Image(systemName: entry.icon)
+                        .symbolRenderingMode(.multicolor)
+                        .widgetAccentable()
+                    
+                    Text(String(format: " %.1f °C", entry.temperature))
+                        .font(.caption2)
+                }
+            }
+            .widgetLabel(label: {
+                Gauge(value: entry.temperature, in: -10...10) {
+                    Text(String(format: " %.1f °C", entry.temperature))
+                } currentValueLabel: {
+                    Text("\(entry.temperature)")
+                } minimumValueLabel: {
+                    Text("-10")
+                        .foregroundColor(.blue)
+                } maximumValueLabel: {
+                    Text("10")
+                        .foregroundColor(.pink)
+                }
+                .tint(Gradient(colors: [.blue, .green, .pink]))
+            })
+        }
+    }
+```
+
+- showsWidgetLabel 환경변수값을 통해, 해당 위젯에서 widgetLabel이 보일 수 있는지 확인할 수 있음  
+```swift 
+@Environment(\.showsWidgetLabel) var showsWidgetLabel
 ```
 
 # #. Recommendations
