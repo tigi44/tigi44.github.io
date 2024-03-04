@@ -1,10 +1,10 @@
 ---
-title: "[iOS, Swift] EncodingURL"
+title: "[iOS, Swift] URL issue for decodable struct in iOS16 and below"
 excerpt: "iOS16이하 버전에서 한글이 포함된 URL을 사용할 때 Decodable URL 이슈 발생"
-description: "Decoding issue of url containing Korean language occurs in version 16 and below"
+description: "URL issue for decodable struct in iOS16 and below"
 modified: 2024-03-04
 categories: "iOS"
-tags: [iOS, Swift, Encode, URL]
+tags: [iOS, Swift, Decodable, URL, Struct]
 
 classes: wide
 toc: false
