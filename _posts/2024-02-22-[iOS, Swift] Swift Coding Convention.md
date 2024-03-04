@@ -6,7 +6,7 @@ modified: 2024-02-22
 categories: "iOS"
 tags: [iOS, Swift]
 
-toc: true
+toc: false
 
 header:
   teaser: /assets/images/teaser/swift-teaser.png
