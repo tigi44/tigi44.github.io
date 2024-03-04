@@ -1,10 +1,10 @@
 ---
-title: "[iOS] NSDateFormatter Locale Error"
-excerpt: "NSDateFormatter Locale Error"
-description: "NSDateFormatter Locale Error"
+title: "[iOS] Out Of Index Crash In UITableView"
+excerpt: "Out Of Index Crash In UITableView"
+description: "Out Of Index Crash In UITableView"
 modified: 2024-02-22
 categories: "iOS"
-tags: [iOS, NSDateFormatter, Locale]
+tags: [iOS, UITableView, OutOfIndex]
 
 toc: true
 
@@ -13,54 +13,72 @@ header:
 ---
 
 # 이슈
-- 현재 시간 포맷(yyyyMMddHHmmssSSS)에서 `20230515175713092 -> 20230515오후 55713092` 이렇게 오전/오후 스트링이 추가된 상태로 나오는 이슈 발생
-```obj-c
-+ (NSString *)dateString
-{
-    NSDateFormatter *sDateFormat    = [[NSDateFormatter alloc] init];
-    sDateFormat.dateFormat          = @"yyyyMMddHHmmssSSS";
+- UITableView의 DataSource에서 IndexPath를 사용하면서 Out Of Index 크래시 오류가 발생하는 상황
+- UITableView 가 Thread 상에서 어떻게 동작 하는지 살펴볼 필요 있음
+
+# 예시코드
+```swift
+class MainViewController {
+    let tableView: UITableView
+    let dataList: [String] = []
 
     ...
 
-    NSString *sDate                 = [sDateFormat stringFromDate:[NSDate date]];
+    func fetch() {
+        getDataResource { newDataList in
+            self.dataList = newDataList
 
-    ...
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
 }
+
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataList.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+
+        let data = dataList[indexPath.row] // crash 발생 가능성 있음
+        cell.textLabel?.text = data
+
+        return cell
+    }
+}
+
 ```
 
-# 원인
->When working with fixed format dates, such as RFC 3339, you set the dateFormat property to specify a format string. For most fixed formats, you should also set the locale property to a POSIX locale ("en_US_POSIX"), and set the timeZone property to UTC.
+# 크래시 발생 케이스
+- 코드상으로는 numberOfRowsInSection에서 사용한 dataList.count 갯수만큼, cellForRowAt에서 dataList에 접근하므로 크래시가 발생할 이유가 없어 보임
+- 하지만, UITableView가 Main Thread 안에서 Reload되는 동작을 고려해 본다면, 특정 케이스에서 크래시가 발생할 수 있음
+- 위 코드상에서 `fetch안의 getDataResource` 가 async하게 여러번 호출된다고 가정해보면(API Network 호출등), `tableView.reloadData()`은 async하게 여러번 호출되겠지만, UI업데이트는 Main Thread에서 동작하기때문에, Serial하게 한번씩 reload가 실행이 됨. 이때 `fetch()`안에서 `dataList` 의 갯수가 변경되게 되면, 이에 해당하는 `tableView.reloadData()`가 아직 Main Thread상에서 실행되지 않은 상태에서, `cellForRowAt` 에서 변경된 `dataList`를 사용할 수 있는 케이스가 발생. 이럴경우 cell의 갯수는 변경전의 dataList 갯수를 사용하고, 직접 cell을 그리는 와중에서는 변경된 dataList로 접근하면서, 원래 cell count 갯수와는 다른 dataList에 접근하면서 `Out of Index` 크래시가 발생할 수 있다.
 
-- 날짜 및 시간를 표기하는 포맷방식은 지역에 따라 다르며, 표준 포맷으로는 `ISO 8601(국제 표준)`, `RFC 3339(인터넷 표준)` 등이 있음
-    - 지역에 따라, 날짜 및 시간을 표기하는 포맷이 다를 수 있음
-- iOS에서는 이렇게 지역에 따라 달라지는 포맷을 하나로 통일하기 위해, `Locale(identifier: "en_US_POSIX")`을 설정할 수 있도록 지원
-    - en-US의 날짜 및 시간 표기법을 따르도록 설정
+# 방어로직
+- 이를 방지하기위해, Array를 사용할때 Range범위를 체크하는 방어로직을 추가해야 함
 
-## 이슈 재현
-- iOS 국가설정에서 영국, 프랑스, 일본등 시간 표기시 24시간 포맷을 기본으로 사용하는 국가로 선택
-- iOS 시간제 설정에서 24시간제 지원 설정을 끄고 12시간 포맷을 사용하도록 설정
-- 코드상에서 NSDateFormatter 사용시 별도의 locale 설정없이, `HH` 시간포맷을 사용하면 24시간제를 지원 할 수 없는 상태가 되면서 `오후 5` 로 노출됨
-- 한국이나, 미국등의 국가로 설정할시에는 24시간제 설정에 상관없이 `HH`이 정상적으로 24시간제로 노출
-
-# 해결 방안
-- NSDateFormatter 설정시 locale에 `Locale(identifier: "en_US_POSIX")` 값을 설정하여 고정된 24시간제 노출이 되도록 설정
-```obj-c
-+ (NSString *)dateString
-{
-    NSDateFormatter *sDateFormat    = [[NSDateFormatter alloc] init];
-    sDateFormat.locale              = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    sDateFormat.dateFormat          = @"yyyyMMddHHmmssSSS";
-
+```swift
+extension MainViewController: UITableViewDataSource {
     ...
 
-    NSString *sDate                 = [sDateFormat stringFromDate:[NSDate date]];
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
 
-    ...
+        guard dataList.indices.contains(indexPath.row) else { // dataList Array의 Range안에서 indexPath.row값을 사용할 수 있는지 체크하는 방어로직 필요
+            return cell
+        }
+
+        let data = dataList[indexPath.row]
+        cell.textLabel?.text = data
+
+        return cell
+    }
 }
+
 ```
 
-# Reference
-- [https://stackoverflow.com/questions/29374181/nsdateformatter-hh-returning-am-pm-on-ios-8-device](https://stackoverflow.com/questions/29374181/nsdateformatter-hh-returning-am-pm-on-ios-8-device){: target="_blank"}
-- [https://developer.apple.com/documentation/foundation/nsdateformatter](https://developer.apple.com/documentation/foundation/nsdateformatter){: target="_blank"}
-- [https://developer.apple.com/library/archive/qa/qa1480/_index.html](https://developer.apple.com/library/archive/qa/qa1480/_index.html){: target="_blank"}
-- [https://developer.apple.com/forums/thread/700869](https://developer.apple.com/forums/thread/700869){: target="_blank"}
+# Referrence
+- [https://velog.io/@wansook0316/Out-Of-Index-In-Main-Async](https://velog.io/@wansook0316/Out-Of-Index-In-Main-Async){: target="_blank"}
