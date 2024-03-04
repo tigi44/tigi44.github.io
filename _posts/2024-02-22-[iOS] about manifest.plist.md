@@ -1,5 +1,5 @@
 ---
-title: "[[iOS] about manifest.plist"
+title: "[iOS] about manifest.plist"
 excerpt: "about manifest.plist"
 description: "about manifest.plist"
 modified: 2024-02-22
