@@ -27,7 +27,7 @@ header:
   git checkout $branch
   git pull
 ```
-### 2) Update appVerion and buildNumber in PAYCO.xcodeproj
+### 2) Update appVerion and buildNumber in .xcodeproj
 #### a. Version up
 - xcode 프로젝트 파일에서 기존의 앱버전과 빌드넘버를 파싱하여 각각 한 버전씩 업데이트
 ```bash

@@ -33,11 +33,11 @@ depth=2 C = US, ST = New Jersey, L = Jersey City, O = The USERTRUST Network, CN 
 verify return:1
 depth=1 C = GB, ST = Greater Manchester, L = Salford, O = Sectigo Limited, CN = Sectigo RSA Organization Validation Secure Server CA
 verify return:1
-depth=0 C = KR, postalCode = 13487, ST = Gyeonggi, L = Seongnam, street = "16 Daewangpangyo-ro 645beon-gil, Bundang-gu", O = NHN PAYCO Corporation, CN = *.payco.com
+depth=0 C = KR, postalCode = 13487, ST = Gyeonggi, L = Seongnam, street = "16 Daewangpangyo-ro 645beon-gil, Bundang-gu", O = a Corporation, CN = *.a.com
 verify return:1
 ---
 Certificate chain
- 0 s:/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=NHN PAYCO Corporation/CN=*.payco.com
+ 0 s:/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=a Corporation/CN=*.a.com
    i:/C=GB/ST=Greater Manchester/L=Salford/O=Sectigo Limited/CN=Sectigo RSA Organization Validation Secure Server CA
  1 s:/C=GB/ST=Greater Manchester/L=Salford/O=Sectigo Limited/CN=Sectigo RSA Organization Validation Secure Server CA
    i:/C=US/ST=New Jersey/L=Jersey City/O=The USERTRUST Network/CN=USERTrust RSA Certification Authority
@@ -88,7 +88,7 @@ yWLCMDZtsSF6RmfYiCP7tpCxU7lPuKoSLfQivuwMspQ0a0d58V0hfM0n6DubpqfY
 FwHq18BhTTUgJ+Hd+hg+X3fAuJUstPskCKLt2i6J2yxzvv4niXhwSfTAwO4tuwy+
 INOD3mm8VZumCULE33Vc/aCe
 -----END CERTIFICATE-----
-subject=/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=NHN PAYCO Corporation/CN=*.payco.com
+subject=/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=a Corporation/CN=*.a.com
 issuer=/C=GB/ST=Greater Manchester/L=Salford/O=Sectigo Limited/CN=Sectigo RSA Organization Validation Secure Server CA
 ---
 No client certificate CA names sent
@@ -140,11 +140,11 @@ depth=2 C = US, ST = New Jersey, L = Jersey City, O = The USERTRUST Network, CN 
 verify return:1
 depth=1 C = GB, ST = Greater Manchester, L = Salford, O = Sectigo Limited, CN = Sectigo RSA Organization Validation Secure Server CA
 verify return:1
-depth=0 C = KR, postalCode = 13487, ST = Gyeonggi, L = Seongnam, street = "16 Daewangpangyo-ro 645beon-gil, Bundang-gu", O = NHN PAYCO Corporation, CN = *.payco.com
+depth=0 C = KR, postalCode = 13487, ST = Gyeonggi, L = Seongnam, street = "16 Daewangpangyo-ro 645beon-gil, Bundang-gu", O = a Corporation, CN = *.a.com
 verify return:1
 ---
 Certificate chain
- 0 s:/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=NHN PAYCO Corporation/CN=*.payco.com
+ 0 s:/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=a Corporation/CN=*.a.com
    i:/C=GB/ST=Greater Manchester/L=Salford/O=Sectigo Limited/CN=Sectigo RSA Organization Validation Secure Server CA
  1 s:/C=GB/ST=Greater Manchester/L=Salford/O=Sectigo Limited/CN=Sectigo RSA Organization Validation Secure Server CA
    i:/C=US/ST=New Jersey/L=Jersey City/O=The USERTRUST Network/CN=USERTrust RSA Certification Authority
@@ -195,7 +195,7 @@ yWLCMDZtsSF6RmfYiCP7tpCxU7lPuKoSLfQivuwMspQ0a0d58V0hfM0n6DubpqfY
 FwHq18BhTTUgJ+Hd+hg+X3fAuJUstPskCKLt2i6J2yxzvv4niXhwSfTAwO4tuwy+
 INOD3mm8VZumCULE33Vc/aCe
 -----END CERTIFICATE-----
-subject=/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=NHN PAYCO Corporation/CN=*.payco.com
+subject=/C=KR/postalCode=13487/ST=Gyeonggi/L=Seongnam/street=16 Daewangpangyo-ro 645beon-gil, Bundang-gu/O=a Corporation/CN=*.a.com
 issuer=/C=GB/ST=Greater Manchester/L=Salford/O=Sectigo Limited/CN=Sectigo RSA Organization Validation Secure Server CA
 ---
 No client certificate CA names sent
