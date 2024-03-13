@@ -6,7 +6,7 @@ modified: 2024-03-13
 categories: "XCode"
 tags: [XCode, XCFramework, StaticLibrary]
 
-toc: false
+toc: true
 
 header:
   teaser: /assets/images/teaser/ios-teaser.png
