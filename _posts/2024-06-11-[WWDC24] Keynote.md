@@ -6,7 +6,7 @@ modified: 2024-06-11
 categories: "WWDC24"
 tags: [WWDC, WWDC24, Keynote, AppleIntelligence]
 
-toc: false
+toc: true
 
 header:
   teaser: /assets/images/teaser/wwdc24-teaser.png
