@@ -1,11 +1,12 @@
 ---
 title: "[iOS] Communication and Time Sensitive Notifications"
-excerpt: "[iOS] Communication and Time Sensitive Notifications”
+excerpt: "[iOS] Communication and Time Sensitive Notifications"
 description: "Communication and Time Sensitive Notifications"
 modified: 2024-12-20
 categories: "iOS"
 tags: [iOS, Notification, Communicatin, TimeSensitive, interruptionLevel]
 
+classes: wide
 toc: false
 
 header:
