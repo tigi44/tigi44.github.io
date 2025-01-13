@@ -13,4 +13,4 @@ header:
   teaser: /assets/images/teaser/swift-teaser.png
 ---
 
-<script src=“https://gist.github.com/tigi44/1a060bc4376373fe309947688df6d0cf.js”></script>
+<script src="https://gist.github.com/tigi44/1a060bc4376373fe309947688df6d0cf.js"></script>
